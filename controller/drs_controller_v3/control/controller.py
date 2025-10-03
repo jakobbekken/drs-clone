@@ -1,4 +1,4 @@
-from .camera import Camera
+from drs_controller_v3.vision.camera import Camera
 
 
 class Controller:
