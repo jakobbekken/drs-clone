@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "eamodio.gitlens",
+    "seatonjiang.gitmoji-vscode",
+    "bbenoist.Nix",
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "charliermarsh.ruff"
+  ]
+}
