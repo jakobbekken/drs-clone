@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://3xr70lliryn4"]
+
+[ext_resource type="Script" uid="uid://71qjm5t5daed" path="res://scenes/Conductor.cs" id="1_dqjak"]
+
+[node name="Conductor" type="AudioStreamPlayer2D" node_paths=PackedStringArray("offsetTimer")]
+script = ExtResource("1_dqjak")
+offsetTimer = NodePath("OffsetTimer")
+
+[node name="OffsetTimer" type="Timer" parent="."]
