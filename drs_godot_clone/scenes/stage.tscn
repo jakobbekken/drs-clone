@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://d4csnftlstjf5"]
+
+[ext_resource type="Texture2D" uid="uid://bxreoas2lbv47" path="res://sprites/Stage-Sheet.png" id="1_kewym"]
+[ext_resource type="Script" uid="uid://cfx2vw18e7fg7" path="res://scenes/Stage.cs" id="2_6c5u0"]
+[ext_resource type="PackedScene" uid="uid://kyi1opcu126w" path="res://scenes/foot.tscn" id="3_vcsse"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2so7o"]
+size = Vector2(474.75, 42)
+
+[node name="Stage" type="Sprite2D" node_paths=PackedStringArray("foot0", "foot1", "hitbox")]
+scale = Vector2(4, 2)
+texture = ExtResource("1_kewym")
+vframes = 2
+script = ExtResource("2_6c5u0")
+footXTolerance = 40.0
+foot0 = NodePath("Foot0")
+foot1 = NodePath("Foot1")
+hitbox = NodePath("Area2D")
+
+[node name="Foot0" parent="." instance=ExtResource("3_vcsse")]
+position = Vector2(-40, 0)
+
+[node name="Foot1" parent="." instance=ExtResource("3_vcsse")]
+position = Vector2(40, 0)
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-0.375, 0)
+shape = SubResource("RectangleShape2D_2so7o")
