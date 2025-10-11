@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://ds6shdn4x2rcx"]
+[gd_scene load_steps=5 format=3 uid="uid://ds6shdn4x2rcx"]
 
 [ext_resource type="Texture2D" uid="uid://bxreoas2lbv47" path="res://sprites/Stage-Sheet.png" id="1_sugp2"]
 [ext_resource type="Script" uid="uid://cfx2vw18e7fg7" path="res://scenes/Stage.cs" id="2_sugp2"]
-[ext_resource type="PackedScene" uid="uid://kyi1opcu126w" path="res://scenes/foot.tscn" id="3_jyhfs"]
+[ext_resource type="PackedScene" path="res://scenes/foot.tscn" id="3_jyhfs"]
+[ext_resource type="PackedScene" uid="uid://dmy0c1dihuqod" path="res://scenes/web_socket.tscn" id="4_jyhfs"]
 
 [node name="Main" type="Node2D"]
 
@@ -15,10 +16,11 @@ script = ExtResource("2_sugp2")
 foot0 = NodePath("Foot0")
 foot1 = NodePath("Foot1")
 stepTime = 0.2
-speed = 69.0
 
 [node name="Foot0" parent="Stage" instance=ExtResource("3_jyhfs")]
 position = Vector2(-40, 0)
 
 [node name="Foot1" parent="Stage" instance=ExtResource("3_jyhfs")]
 position = Vector2(40, 0)
+
+[node name="WebSocket" parent="." instance=ExtResource("4_jyhfs")]

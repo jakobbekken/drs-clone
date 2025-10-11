@@ -3,6 +3,8 @@ using System;
 using System.Text.Json;
 using System.Text;
 using Game;
+
+namespace Game;
 public partial class WebSocket : Node2D
 {
     [Export] public int _port = 6969;
@@ -12,7 +14,7 @@ public partial class WebSocket : Node2D
 
     // Signal only supports native Godot types, not arbitrary C# classes
     [Signal]
-    public delegate void DataReceivedEventHandler(float foot1Pos, int foot1Step, float foot2Pos, int foot2Step); 
+    public delegate void DataReceivedEventHandler(float foot1Pos, int foot1Step, float foot2Pos, int foot2Step);
 
     public override void _Ready()
     {
@@ -31,9 +33,9 @@ public partial class WebSocket : Node2D
 
     public override void _Process(double delta)
     {
-        if(this._webSocketPeer.GetReadyState() == WebSocketPeer.State.Open)
+        if (this._webSocketPeer.GetReadyState() == WebSocketPeer.State.Open)
         {
-            while(this._webSocketPeer.GetAvailablePacketCount() > 0)
+            while (this._webSocketPeer.GetAvailablePacketCount() > 0)
             {
                 byte[] packet = this._webSocketPeer.GetPacket();
                 string rawPacketString = Encoding.UTF8.GetString(packet);
@@ -45,7 +47,7 @@ public partial class WebSocket : Node2D
                 {
                     GD.Print($"Could not parse JSON: {error}");
                 }
-                
+
                 GD.Print("==== WEB-SOCKET RECIEVED DATA =====");
                 GD.Print($"Foot 1 position: {this._latestInput.foot0Pos}");
                 GD.Print($"Foot 1 position: {this._latestInput.foot0Step}");
