@@ -1,57 +1,24 @@
-import time
+import copy
+from datetime import datetime
 
 import cv2
 import mediapipe as mp
+from drs_controller_v3.logic.filtering import filter_exp
+from drs_controller_v3.logic.foot_state import FootState
 from drs_controller_v3.vision.camera import Camera
 from drs_controller_v3.vision.tracking import Tracker
 
 
-class PressDetector:
-    def __init__(self, alpha=0.3, debounce=0.2, speed_threshold=0.01):
-        """
-        alpha: smoothing factor for speed (0=very smooth, 1=raw)
-        debounce: minimum seconds between presses
-        speed_threshold: minimum absolute downward speed to count as a press
-        """
-        self.prev_speed = {"left": 0.0, "right": 0.0}
-        self.smooth_speed = {"left": 0.0, "right": 0.0}
-        self.alpha = alpha
-        self.last_press_time = {"left": 0.0, "right": 0.0}
-        self.debounce = debounce
-        self.speed_threshold = speed_threshold
-
-    def update(self, speeds):
-        events = {"left": False, "right": False}
-        now = time.time()
-
-        for side in ["left", "right"]:
-            raw = speeds[side]
-
-            # Exponential smoothing
-            self.smooth_speed[side] = (
-                self.alpha * raw + (1 - self.alpha) * self.smooth_speed[side]
-            )
-
-            prev = self.prev_speed[side]
-            current = self.smooth_speed[side]
-
-            # Check zero-crossing AND threshold
-            if prev < -self.speed_threshold and current >= -self.speed_threshold:
-                if now - self.last_press_time[side] > self.debounce:
-                    events[side] = True
-                    self.last_press_time[side] = now
-
-            self.prev_speed[side] = current
-
-        return events
-
-
 class Controller:
-    def __init__(self):
+    def __init__(self, threshold=0.1):
         self.camera = Camera()
         self.tracker = Tracker()
-        self.detector = PressDetector()
         self.drawer = mp.solutions.drawing_utils
+
+        self.foot_left = FootState(threshold)
+        self.prev_left = None
+        self.foot_right = FootState(threshold)
+        self.prev_right = None
 
     def start(self):
         self.camera.start()
@@ -61,47 +28,59 @@ class Controller:
                 break
 
             rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            results = self.tracker.process_frame(rgb_frame)
+            results = self.tracker.pose.process(rgb_frame)
 
-            if results:
-                left, right = results["left"], results["right"]
-
-                events = self.detector.update(
-                    {"left": left["speed_y"], "right": right["speed_y"]}
+            if results.pose_landmarks:
+                self.drawer.draw_landmarks(
+                    frame,
+                    results.pose_landmarks,
+                    mp.solutions.pose.POSE_CONNECTIONS,
                 )
 
-                if events["left"]:
-                    print("👣 Left foot press detected")
-                    cv2.putText(
-                        frame,
-                        "Left Press",
-                        (50, 50),
-                        cv2.FONT_HERSHEY_SIMPLEX,
-                        1,
-                        (255, 0, 0),
-                        2,
+                data = self.tracker.process_frame(rgb_frame)
+                if data:
+                    left, right = data["left"], data["right"]
+
+                    left_x = left["x"]
+                    left_y = left["y"]
+                    left_speed_y = left["speed_y"]
+
+                    right_x = right["x"]
+                    right_y = right["y"]
+                    right_speed_y = right["speed_y"]
+
+                    time = data["time"]
+
+                    self.prev_left = copy.deepcopy(self.foot_left)
+                    self.prev_right = copy.deepcopy(self.foot_right)
+
+                    new_left_x, new_left_y, new_left_speed_y = filter_exp(
+                        self.prev_left, left_x, left_y, left_speed_y
                     )
 
-                if events["right"]:
-                    print("👣 Right foot press detected")
-                    cv2.putText(
-                        frame,
-                        "Right Press",
-                        (350, 50),
-                        cv2.FONT_HERSHEY_SIMPLEX,
-                        1,
-                        (0, 0, 255),
-                        2,
+                    new_right_x, new_right_y, new_right_speed_y = filter_exp(
+                        self.prev_right, right_x, right_y, right_speed_y
                     )
 
-                h, w, _ = frame.shape
-                lx, ly = int(left["x"] * w), int(left["y"] * h)
-                rx, ry = int(right["x"] * w), int(right["y"] * h)
-                cv2.circle(frame, (lx, ly), 6, (255, 0, 0), -1)
-                cv2.circle(frame, (rx, ry), 6, (0, 0, 255), -1)
+                    self.foot_left.update(
+                        new_left_x, new_left_y, new_left_speed_y, time
+                    )
+                    self.foot_right.update(
+                        new_right_x, new_right_y, new_right_speed_y, time
+                    )
 
-            cv2.imshow("Pose Tracking (Press Detection)", frame)
+                    if self.prev_left.state != self.foot_left.state:
+                        print(datetime.now().strftime("%H:%M:%S.%f")[:-3])
+                        print(f"New left state: {self.foot_left.state}")
+
+                    if self.prev_right.state != self.foot_right.state:
+                        print(f"New right state: {self.foot_right.state}")
+
+                    # print(self.foot_left)
+
+            cv2.imshow("Pose Tracking", frame)
             if cv2.waitKey(1) & 0xFF == ord("q"):
                 break
 
         self.camera.stop()
+        cv2.destroyAllWindows()

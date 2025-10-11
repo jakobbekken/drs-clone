@@ -33,19 +33,33 @@ class Tracker:
         lm = results.pose_landmarks.landmark
         current_time = time.time()
 
-        right = lm[mp.solutions.pose.PoseLandmark.RIGHT_ANKLE]
-        left = lm[mp.solutions.pose.PoseLandmark.LEFT_ANKLE]
+        right_heel = lm[mp.solutions.pose.PoseLandmark.RIGHT_HEEL]
+        right_toe = lm[mp.solutions.pose.PoseLandmark.RIGHT_FOOT_INDEX]
+
+        right_x = (right_heel.x + right_toe.x) / 2.0
+        right_y = (right_heel.y + right_toe.y) / 2.0
 
         right_data = {
-            "x": right.x,
-            "y": right.y,
-            "speed_y": self._compute_speed("right", right.y, current_time),
+            "x": right_x,
+            "y": right_y,
+            "speed_y": self._compute_speed("right", right_y, current_time),
         }
+
+        # Left foot midpoint (heel + foot index) / 2
+        left_heel = lm[mp.solutions.pose.PoseLandmark.LEFT_HEEL]
+        left_toe = lm[mp.solutions.pose.PoseLandmark.LEFT_FOOT_INDEX]
+
+        left_x = (left_heel.x + left_toe.x) / 2.0
+        left_y = (left_heel.y + left_toe.y) / 2.0
 
         left_data = {
-            "x": left.x,
-            "y": left.y,
-            "speed_y": self._compute_speed("left", left.y, current_time),
+            "x": left_x,
+            "y": left_y,
+            "speed_y": self._compute_speed("left", left_y, current_time),
         }
 
-        return {"left": left_data, "right": right_data}
+        return {
+            "left": left_data,
+            "right": right_data,
+            "time": current_time,
+        }
