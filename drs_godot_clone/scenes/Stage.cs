@@ -8,6 +8,15 @@ namespace Game.Stage
         [Export] float stepTime;
         [Export] float speed = 69f;
 
+        Conductor conductor;
+
+        public override void _Ready()
+        {
+            conductor = Conductor.instance;
+            
+        }
+
+
         public void MoveFeet(InputData data)
         {
             if (data.foot0Step == 1f) { Step(foot0, stepTime); }

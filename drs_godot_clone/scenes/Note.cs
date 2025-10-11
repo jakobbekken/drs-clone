@@ -1,30 +1,33 @@
 using Godot;
 using System;
+using System.Net;
 using System.Text.Json.Serialization.Metadata;
 
-namespace Game.Note
+namespace Game.Notes
 {
     public partial class Note : Area2D
     {
-        [Export] int speed;
+        [Export] public int speed = 0;
         [Export] string color;
+        [Export] Timer deathTimer;
 
         //[Signal]
         //public delegate void DestroyedEventHandler(Note note);
-        public void Move(int speed, double delta)
+
+        public override void _PhysicsProcess(double delta)
         {
             Position += new Vector2(0, speed * (float)delta);
         }
 
-        public override void _Process(double delta)
+        public void HitNote(int hitValue)
         {
-            Move(speed, delta);
+            deathTimer.Start();
+            DeleteNote();
         }
 
-        public void DestroyedNote()
+        public void DeleteNote()
         {
-            //EmitSignal(SignalName.Destroyed, this);
-            this.QueueFree();
+            QueueFree();
         }
 
     }

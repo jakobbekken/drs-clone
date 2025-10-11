@@ -6,8 +6,9 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t3yvt"]
 size = Vector2(32, 32)
 
-[node name="Area2D" type="Area2D"]
+[node name="Area2D" type="Area2D" node_paths=PackedStringArray("deathTimer")]
 script = ExtResource("1_t3yvt")
+deathTimer = NodePath("DeathTimer")
 
 [node name="Icon" type="Sprite2D" parent="."]
 scale = Vector2(0.25, 0.25)
@@ -15,3 +16,6 @@ texture = ExtResource("2_1bnk6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_t3yvt")
+
+[node name="DeathTimer" type="Timer" parent="."]
+wait_time = 0.1
