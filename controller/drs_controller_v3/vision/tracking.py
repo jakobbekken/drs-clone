@@ -45,7 +45,6 @@ class Tracker:
             "speed_y": self._compute_speed("right", right_y, current_time),
         }
 
-        # Left foot midpoint (heel + foot index) / 2
         left_heel = lm[mp.solutions.pose.PoseLandmark.LEFT_HEEL]
         left_toe = lm[mp.solutions.pose.PoseLandmark.LEFT_FOOT_INDEX]
 
