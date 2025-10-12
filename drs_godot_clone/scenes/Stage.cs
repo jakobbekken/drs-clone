@@ -5,6 +5,7 @@ namespace Game.Stage
     public partial class Stage : Sprite2D
     {
         int score = 0;
+        [Export] string noteHitTextPath;
         [Export] float footXTolerance = 15f;
         [Export] float stepTime = 0.2f;
         [Export] float keyboardMovementSpeed = 69f;
@@ -86,6 +87,7 @@ namespace Game.Stage
                         NoteVFX(timing);
                         notes.Remove(note);
                         note.QueueFree();
+                        break;
                     }
                     
                 }
@@ -118,22 +120,17 @@ namespace Game.Stage
 
         private int TimingRating(float yDistance)
         {
-            int howGood = 3;
             switch (yDistance)
             {
                 case var _ when yDistance < 10f:  //perfect
-                    howGood = 3;
-                    break;
+                    return 3;
                 case var _ when yDistance < 25f: //good
-                    howGood = 2;
-                    break;
+                    return 2;
                 case var _ when yDistance < 45f: // ok
-                    howGood = 1;
-                    break;
-                default:                         // near miss
-                    break;
+                    return 1;
+                default:                         // miss
+                    return 0;
             }
-            return howGood;
         }
 #endregion NoteHit
         private void Unstep(Foot foot)

@@ -9,5 +9,16 @@
 position = Vector2(960, 1000)
 
 [node name="Area2D2" parent="." instance=ExtResource("2_0wfyh")]
-position = Vector2(600, 1001)
+position = Vector2(606, 473)
 scale = Vector2(4, 2)
+speed = 120
+
+[node name="Area2D3" parent="." instance=ExtResource("2_0wfyh")]
+position = Vector2(753, 601)
+scale = Vector2(4, 2)
+speed = 120
+
+[node name="Area2D4" parent="." instance=ExtResource("2_0wfyh")]
+position = Vector2(974, 447)
+scale = Vector2(4, 2)
+speed = 120
