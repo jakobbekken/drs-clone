@@ -1,11 +1,13 @@
+using Game.VFX;
 using Godot;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 namespace Game.Stage
 {
     public partial class Stage : Sprite2D
     {
         int score = 0;
-        [Export] string noteHitTextPath;
+        [Export(PropertyHint.File)] string noteHitTextPath;
         [Export] float footXTolerance = 15f;
         [Export] float stepTime = 0.2f;
         [Export] float keyboardMovementSpeed = 69f;
@@ -18,7 +20,7 @@ namespace Game.Stage
         {
             hitbox.AreaEntered += AddActiveNote;
         }
-        
+
 
         private void AddActiveNote(Node2D body)
         {
@@ -64,11 +66,11 @@ namespace Game.Stage
             {
                 Unstep(foot1);
             }
-            
+
         }
         Vector2 ClampedPos(float pos)
         {
-            return new Vector2(Mathf.Min(Mathf.Max(pos, -216), 216),0);
+            return new Vector2(Mathf.Min(Mathf.Max(pos, -216), 216), 0);
         }
 
         private void Step(Foot foot, float time)
@@ -78,26 +80,30 @@ namespace Game.Stage
             {
                 if (Mathf.Abs(note.GlobalPosition.X - foot.GlobalPosition.X) < footXTolerance)
                 {
-                    
-                    float yDistance = Mathf.Abs(note.GlobalPosition.Y - GlobalPosition.Y);
+
+                    float yDistance = Mathf.Abs(note.GlobalPosition.Y - hitbox.GlobalPosition.Y);
                     int timing = TimingRating(yDistance);
-                    if (timing > 0) 
+                    if (timing > 0)
                     {
                         GivePoints(timing);
-                        NoteVFX(timing);
+                        NoteVFX(foot, timing);
                         notes.Remove(note);
                         note.QueueFree();
                         break;
                     }
-                    
+
                 }
             }
 
         }
-#region NoteHit
-        private void NoteVFX(int timing)
+        #region NoteHit
+        private void NoteVFX(Foot foot, int timing)
         {
-            GD.Print("Wow, pretty effects!");
+            PackedScene hitTextScene = GD.Load<PackedScene>(noteHitTextPath);
+            NoteHitText text = hitTextScene.Instantiate<NoteHitText>();
+            text.Setup(timing);
+            text.GlobalPosition = foot.GlobalPosition - Vector2.Up * 15;
+            AddSibling(text);
         }
 
         private void GivePoints(int timing)
@@ -115,7 +121,7 @@ namespace Game.Stage
                     GD.Print("OK");
                     break;
             }
-            GD.Print("Score: "+ score);
+            GD.Print("Score: " + score);
         }
 
         private int TimingRating(float yDistance)
@@ -132,7 +138,7 @@ namespace Game.Stage
                     return 0;
             }
         }
-#endregion NoteHit
+        #endregion NoteHit
         private void Unstep(Foot foot)
         {
             foot.Unstep();

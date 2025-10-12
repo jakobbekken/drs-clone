@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://bn8k2vbqtxq8m"]
+
+[ext_resource type="PackedScene" uid="uid://d4csnftlstjf5" path="res://scenes/stage.tscn" id="1_berbj"]
+[ext_resource type="PackedScene" uid="uid://dmy0c1dihuqod" path="res://scenes/web_socket.tscn" id="2_bae2j"]
+[ext_resource type="PackedScene" uid="uid://3xr70lliryn4" path="res://scenes/conductor.tscn" id="3_baegn"]
+[ext_resource type="PackedScene" uid="uid://bun3cpxq36s7h" path="res://scenes/noteGenerator.tscn" id="4_4ukym"]
+[ext_resource type="PackedScene" uid="uid://bttbw0sufdm3q" path="res://scenes/note.tscn" id="5_4ukym"]
+
+[node name="GameHead" type="Node2D"]
+
+[node name="Stage" parent="." instance=ExtResource("1_berbj")]
+position = Vector2(960, 1000)
+noteHitTextPath = "uid://dq7lsqnc3kdqj"
+
+[node name="WebSocket" parent="." instance=ExtResource("2_bae2j")]
+
+[node name="Conductor" parent="." instance=ExtResource("3_baegn")]
+
+[node name="NoteGenertor" parent="." node_paths=PackedStringArray("conductor") instance=ExtResource("4_4ukym")]
+conductor = NodePath("../Conductor")
+
+[node name="Area2D" parent="." instance=ExtResource("5_4ukym")]
+position = Vector2(645, 183)
+speed = 120
+
+[node name="Area2D2" parent="." instance=ExtResource("5_4ukym")]
+position = Vector2(1173, 439)
+speed = 120

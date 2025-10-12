@@ -50,9 +50,9 @@ public partial class WebSocket : Node2D
 
                 GD.Print("==== WEB-SOCKET RECIEVED DATA =====");
                 GD.Print($"Foot 1 position: {this._latestInput.foot0Pos}");
-                GD.Print($"Foot 1 position: {this._latestInput.foot0Step}");
-                GD.Print($"Foot 1 position: {this._latestInput.foot1Pos}");
-                GD.Print($"Foot 1 position: {this._latestInput.foot1Step}");
+                GD.Print($"Foot 1 state: {this._latestInput.foot0Step}");
+                GD.Print($"Foot 2 position: {this._latestInput.foot1Pos}");
+                GD.Print($"Foot 2 state: {this._latestInput.foot1Step}");
                 EmitSignal(SignalName.DataReceived, this._latestInput.foot0Pos, this._latestInput.foot0Step,
                                                     this._latestInput.foot1Pos, this._latestInput.foot1Step);
             }
