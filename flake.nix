@@ -23,7 +23,7 @@
           ];
           shellHook = ''
             echo "Hei sjef! Hva skal det være i dag?"
-            echo "Kjør 'uv venv', så 'uv pip install -r requirements.txt', skjønne du?"
+            echo "Kjør 'uv venv', så 'uv pip install -r requirements.lock', skjønne du?"
           '';
         };
       });
