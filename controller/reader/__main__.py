@@ -1,35 +1,19 @@
+import asyncio
 import json
-import socket
 
-HOST = "127.0.0.1"
-PORT = 6969
+import websockets
 
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-sock.connect((HOST, PORT))
-print("Connected to controller!")
 
-buffer = ""
-
-try:
-    while True:
-        data = sock.recv(1024)
-        if not data:
-            break
-        buffer += data.decode()
-
-        lines = buffer.split("\n")
-        buffer = lines.pop()
-
-        for line in lines:
-            if not line.strip():
-                continue
+async def listen():
+    uri = "ws://127.0.0.1:6969"
+    async with websockets.connect(uri) as ws:
+        print("Connected to controller!")
+        async for message in ws:
             try:
-                msg = json.loads(line)
+                msg = json.loads(message)
                 print("Received:", msg)
             except json.JSONDecodeError:
-                print("Bad JSON:", line)
+                print("Bad JSON:", message)
 
-except KeyboardInterrupt:
-    print("Stopped.")
-finally:
-    sock.close()
+
+asyncio.run(listen())
