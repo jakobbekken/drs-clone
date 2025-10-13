@@ -11,6 +11,8 @@ uv pip sync requirements.lock
 uv run -m controller_version
 ```
 
+It can be downloaded here: [https://docs.astral.sh/uv/](https://docs.astral.sh/uv/)
+
 To lock a new requirements file from the `.txt` file, run:
 ```bash
 uv pip compile requirements.txt -o requirements.lock
