@@ -10,11 +10,14 @@ namespace Game
         [Export] public int _port = 6969;
         private string _ip_address = "127.0.0.1";
         private WebSocketPeer _webSocketPeer;
-        private Godot.Collections.Dictionary _latestInput;
+        private float _leftX;
+        private float _rightX;
+        private string _leftState;
+        private string _rightState;
 
 
         [Signal]
-        public delegate void DataReceivedEventHandler(float foot1Pos, int foot1Step, float foot2Pos, int foot2Step);
+        public delegate void DataReceivedEventHandler(float leftX, float rightX, string leftState, string rightState);
 
         public override void _Ready()
         {
@@ -50,7 +53,15 @@ namespace Game
                     {
                         try
                         {
-                            this._latestInput = (Godot.Collections.Dictionary)parseResult;
+                            Godot.Collections.Dictionary rootDict = (Godot.Collections.Dictionary)parseResult;
+                            Godot.Collections.Dictionary leftDict = (Godot.Collections.Dictionary)rootDict["left"];
+                            Godot.Collections.Dictionary rightDict = (Godot.Collections.Dictionary)rootDict["right"];
+
+                            this._leftX = (float)leftDict["x"];
+                            this._rightX = (float)rightDict["x"];
+                            this._leftState = (string)leftDict["state"];
+                            this._rightState = (string)rightDict["state"];
+                            
                         }
                         catch (Exception error)
                         {
@@ -66,10 +77,9 @@ namespace Game
                     //GD.Print(this._latestInput);
                     
                     GD.Print("==== WEB-SOCKET RECEIVED DATA =====");
-                    GD.Print($"Left foot: {this._latestInput["left"]}");
-                    GD.Print($"Right foot: {this._latestInput["right"]}");
-                    //EmitSignal(nameof(DataReceived), this._latestInput["left"], this._latestInput["left"],
-                    //    this._latestInput["right"], this._latestInput["right"]);
+                    GD.Print($"Left foot - xPos: {this._leftX}, state: {this._leftState}");
+                    GD.Print($"Right foot - xPos: {this._rightX}, state: {this._rightState}");
+                    EmitSignal(SignalName.DataReceived, this._leftX, this._rightX, this._leftState, this._rightState);
                 }
             }
         }
