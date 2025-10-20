@@ -16,12 +16,14 @@ namespace Game.Stage
         [Export] Foot foot1;
         [Export] Area2D hitbox;
         [Export] WebSocket _socket;
+        float sceneWidth;
 
         List<VisualNote> notes = new();
         public override void _Ready()
         {
             hitbox.AreaEntered += AddActiveNote;
             _socket.DataReceived += MoveFeet;
+            sceneWidth = GlobalPosition.X;
         }
 
 
