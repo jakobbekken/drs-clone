@@ -12,6 +12,7 @@
 position = Vector2(481, 512)
 scale = Vector2(2, 1)
 noteHitTextPath = "uid://dq7lsqnc3kdqj"
+_socket = NodePath("../WebSocket")
 
 [node name="WebSocket" parent="." instance=ExtResource("2_bae2j")]
 

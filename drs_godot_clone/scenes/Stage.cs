@@ -10,17 +10,19 @@ namespace Game.Stage
         [Export(PropertyHint.File)] string noteHitTextPath;
         [Export] float footXTolerance = 15f;
         [Export] float stepTime = 0.2f;
-        [Export] float keyboardMovementSpeed = 69f;
+        [Export] float keyboardMovementSpeed = 250f;
         [Export] Foot foot0;
         [Export] Foot foot1;
         [Export] Area2D hitbox;
         float sceneWidth;
+        [Export] WebSocket _socket;
 
         List<Note.Note> notes = new();
         public override void _Ready()
         {
             hitbox.AreaEntered += AddActiveNote;
             sceneWidth = GlobalPosition.X;
+            _socket.DataReceived += MoveFeet;
         }
 
 
@@ -29,24 +31,26 @@ namespace Game.Stage
             if (body is Note.Note note) notes.Add(note);
         }
 
-        public void MoveFeet(InputData data)
+        public void MoveFeet(float leftX, float rightX, string leftState, string rightState)
         {
-            if (data.foot0Step == 1f) { Step(foot0, stepTime); }
-            else if (data.foot0Step == -1f) { Unstep(foot0); }
+            foot0.Position = new Vector2(keyboardMovementSpeed * -leftX, foot0.Position.Y);
+            foot1.Position = new Vector2(keyboardMovementSpeed * -rightX, foot1.Position.Y);
 
-            if (data.foot1Step == 1) Step(foot1, stepTime);
-            else if (data.foot1Step == -1) { Unstep(foot1); }
+            if (leftState == "Press") { Step(foot0,stepTime); }
+            else if (leftState == "Up") { Unstep(foot0); }
 
-            foot0.Position = new Vector2(data.foot0Pos, foot0.Position.Y);
-            foot1.Position = new Vector2(data.foot1Pos, foot1.Position.Y);
+            if (rightState == "Press") { Step(foot1,stepTime); }
+            else if (rightState == "Up"){ Unstep(foot1); }
         }
 
         public override void _Process(double delta)
         {
-            KeyboardControls(delta);
+            //KeyboardControls(delta);
         }
         private void KeyboardControls(double delta)
         {
+            
+            /*
             float foot0Movement = Input.GetActionStrength("wasd_right") - Input.GetActionStrength("wasd_left");
             float foot1Movement = Input.GetActionStrength("ui_right") - Input.GetActionStrength("ui_left");
 
@@ -68,6 +72,7 @@ namespace Game.Stage
             {
                 Unstep(foot1);
             }
+            */
 
         }
         Vector2 ClampedPos(float pos)
