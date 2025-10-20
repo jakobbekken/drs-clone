@@ -14,11 +14,13 @@ namespace Game.Stage
         [Export] Foot foot0;
         [Export] Foot foot1;
         [Export] Area2D hitbox;
+        float sceneWidth;
 
         List<Note.Note> notes = new();
         public override void _Ready()
         {
             hitbox.AreaEntered += AddActiveNote;
+            sceneWidth = GlobalPosition.X;
         }
 
 

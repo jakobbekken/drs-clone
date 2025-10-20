@@ -9,7 +9,8 @@
 [node name="GameHead" type="Node2D"]
 
 [node name="Stage" parent="." instance=ExtResource("1_berbj")]
-position = Vector2(960, 1000)
+position = Vector2(481, 512)
+scale = Vector2(2, 1)
 noteHitTextPath = "uid://dq7lsqnc3kdqj"
 
 [node name="WebSocket" parent="." instance=ExtResource("2_bae2j")]
@@ -20,9 +21,9 @@ noteHitTextPath = "uid://dq7lsqnc3kdqj"
 conductor = NodePath("../Conductor")
 
 [node name="Area2D" parent="." instance=ExtResource("5_4ukym")]
-position = Vector2(645, 183)
+position = Vector2(493, 189)
 speed = 120
 
 [node name="Area2D2" parent="." instance=ExtResource("5_4ukym")]
-position = Vector2(1173, 439)
+position = Vector2(648, 391)
 speed = 120
