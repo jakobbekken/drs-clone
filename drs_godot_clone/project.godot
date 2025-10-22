@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="DRS_godot_clone"
-run/main_scene="uid://bn8k2vbqtxq8m"
+run/main_scene="res://scenes/game_head.tscn"
 config/features=PackedStringArray("4.5", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
