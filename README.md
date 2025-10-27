@@ -20,7 +20,7 @@ uv pip compile requirements.txt -o requirements.lock
 
 ## DRS Game 
 The game is built using Godot Engine - .NET (4.5) and as such it is required to test the code. 
-Windows is recomended as that is what this guide is ment for.
+Windows is recommended as that is what this guide is ment for.
 
 #### Installing Godot
 1. Install godot Godot Engine - .NET (4.5) from here: https://godotengine.org/download/windows/
