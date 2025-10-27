@@ -23,7 +23,7 @@ namespace Game.Stage
         {
             hitbox.AreaEntered += AddActiveNote;
             _socket.DataReceived += MoveFeet;
-            sceneWidth = GlobalPosition.X;
+            sceneWidth = Texture.GetWidth() / 2f * Scale.X;
         }
 
 
@@ -37,45 +37,18 @@ namespace Game.Stage
             foot0.Position = new Vector2(keyboardMovementSpeed * -leftX, foot0.Position.Y);
             foot1.Position = new Vector2(keyboardMovementSpeed * -rightX, foot1.Position.Y);
 
-            if (leftState == "Press") { Step(foot0,stepTime); }
+            if (leftState == "Press") { Step(foot0, stepTime); }
             else if (leftState == "Up") { Unstep(foot0); }
 
-            if (rightState == "Press") { Step(foot1,stepTime); }
-            else if (rightState == "Up"){ Unstep(foot1); }
+            if (rightState == "Press") { Step(foot1, stepTime); }
+            else if (rightState == "Up") { Unstep(foot1); }
         }
 
         public override void _Process(double delta)
         {
             //KeyboardControls(delta);
         }
-        private void KeyboardControls(double delta)
-        {
-            
-            /*
-            float foot0Movement = Input.GetActionStrength("wasd_right") - Input.GetActionStrength("wasd_left");
-            float foot1Movement = Input.GetActionStrength("ui_right") - Input.GetActionStrength("ui_left");
 
-            foot0.Position += ClampedPos(foot0Movement * (float)delta * keyboardMovementSpeed);
-            foot1.Position += ClampedPos(foot1Movement * (float)delta * keyboardMovementSpeed);
-            if (Input.GetActionStrength("wasd_up") > 0f)
-            {
-                Step(foot0, stepTime);
-            }
-            else
-            {
-                Unstep(foot0);
-            }
-            if (Input.GetActionStrength("ui_up") > 0f)
-            {
-                Step(foot1, stepTime);
-            }
-            else
-            {
-                Unstep(foot1);
-            }
-            */
-
-        }
         Vector2 ClampedPos(float pos)
         {
             return new Vector2(Mathf.Min(Mathf.Max(pos, -216), 216), 0);
@@ -150,6 +123,30 @@ namespace Game.Stage
         private void Unstep(Foot foot)
         {
             foot.Unstep();
+        }
+        private void KeyboardControls(double delta)
+        {
+            float foot0Movement = Input.GetActionStrength("wasd_right") - Input.GetActionStrength("wasd_left");
+            float foot1Movement = Input.GetActionStrength("ui_right") - Input.GetActionStrength("ui_left");
+
+            foot0.Position += ClampedPos(foot0Movement * (float)delta * keyboardMovementSpeed);
+            foot1.Position += ClampedPos(foot1Movement * (float)delta * keyboardMovementSpeed);
+            if (Input.GetActionStrength("wasd_up") > 0f)
+            {
+                Step(foot0, stepTime);
+            }
+            else
+            {
+                Unstep(foot0);
+            }
+            if (Input.GetActionStrength("ui_up") > 0f)
+            {
+                Step(foot1, stepTime);
+            }
+            else
+            {
+                Unstep(foot1);
+            }
         }
     }
 }
