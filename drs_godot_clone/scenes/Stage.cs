@@ -3,6 +3,7 @@ using Godot;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using Game.Notes;
+using System.Drawing;
 namespace Game.Stage
 {
     public partial class Stage : Sprite2D
@@ -16,6 +17,7 @@ namespace Game.Stage
         [Export] Foot foot1;
         [Export] Area2D hitbox;
         [Export] WebSocket _socket;
+        public int size = 1;
 
         List<VisualNote> notes = new();
         public override void _Ready()
@@ -23,7 +25,6 @@ namespace Game.Stage
             hitbox.AreaEntered += AddActiveNote;
             _socket.DataReceived += MoveFeet;
         }
-
 
         private void AddActiveNote(Node2D body)
         {
@@ -82,8 +83,9 @@ namespace Game.Stage
         private void Step(Foot foot, float time)
         {
             foot.Step(time);
-            foreach (VisualNote note in notes)
+            foreach (VisualNote note in notes.ToArray())
             {
+                if (!IsInstanceValid(note)) continue;
                 if (Mathf.Abs(note.GlobalPosition.X - foot.GlobalPosition.X) < footXTolerance)
                 {
 
