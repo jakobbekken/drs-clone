@@ -58,7 +58,7 @@ namespace Game.Stage
 
         Vector2 ClampedPos(float pos)
         {
-            return new Vector2(Mathf.Min(Mathf.Max(pos, -216), 216), 0);  
+            return new Vector2(Mathf.Min(Mathf.Max(pos, -216), 216), 0);
         }
 
         private void Step(Foot foot, float time)
