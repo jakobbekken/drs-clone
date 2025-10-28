@@ -20,12 +20,10 @@ hitbox = NodePath("Area2D")
 
 [node name="Foot0" parent="." instance=ExtResource("3_vcsse")]
 position = Vector2(-40, 0)
-scale = Vector2(0.25, 1.04)
 texture = ExtResource("4_6c5u0")
 
 [node name="Foot1" parent="." instance=ExtResource("3_vcsse")]
 position = Vector2(40, 0)
-scale = Vector2(0.25, 1.04)
 texture = ExtResource("4_6c5u0")
 
 [node name="Area2D" type="Area2D" parent="."]
