@@ -47,11 +47,9 @@ class FootSniffer:
         # tracking state
         self.feet: Optional[tuple[int, int]] = None
         self.wait_for_movement: int = 5
-
         self.prev_frame: Optional[np.ndarray] = None
         self.points_prev: Optional[np.ndarray] = None
         self.bbox_xywh: Optional[tuple[int,int,int,int]] = None
-
         self.track_ids: Optional[np.ndarray] = None
         self.next_id: int = 0
         self.tracks: dict[int, dict] = {}
@@ -66,7 +64,7 @@ class FootSniffer:
             return
         
         # let feet move before picking
-        if self.start_time is not None and time.time() - self.start_time < self.wait_for_movement:
+        if self.start_time is None or time.time() - self.start_time < self.wait_for_movement:
             return
         
         candidates = []
@@ -271,6 +269,9 @@ class FootSniffer:
 
     def process_frame(self, frame: np.ndarray) -> Optional[dict]:
         """Processes single frame"""
+        if not self.start_time:
+            self.start_time = time.time()
+
         # preprocess
         gray = self.preprocess(frame)
 
