@@ -8,6 +8,7 @@ namespace Game.Note
     {
         [Export] int speed;
         [Export] string color;
+        
 
         //[Signal]
         //public delegate void DestroyedEventHandler(Note note);
@@ -16,9 +17,20 @@ namespace Game.Note
             Position += new Vector2(0, speed * (float)delta);
         }
 
+        bool hasFreezed = false;
+        double freezeTime;
+        
         public override void _Process(double delta)
         {
-            Move(speed, delta);
+            if (freezeTime > 0) freezeTime -= delta;
+            else Move(speed, delta);
+        }
+
+        public void Freeze(double time)
+        {
+            if (hasFreezed) return;
+            freezeTime = time;
+            hasFreezed = true;
         }
 
         public void DestroyedNote()

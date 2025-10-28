@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://bn8k2vbqtxq8m"]
 
-[ext_resource type="PackedScene" uid="uid://d4csnftlstjf5" path="res://scenes/stage.tscn" id="1_berbj"]
+[ext_resource type="PackedScene" uid="uid://d14hoppf8beb5" path="res://scenes/stage.tscn" id="1_berbj"]
 [ext_resource type="PackedScene" uid="uid://dmy0c1dihuqod" path="res://scenes/web_socket.tscn" id="2_bae2j"]
 [ext_resource type="PackedScene" uid="uid://3xr70lliryn4" path="res://scenes/conductor.tscn" id="3_baegn"]
 [ext_resource type="PackedScene" uid="uid://bun3cpxq36s7h" path="res://scenes/noteGenerator.tscn" id="4_4ukym"]
@@ -10,7 +10,6 @@
 
 [node name="Stage" parent="." instance=ExtResource("1_berbj")]
 position = Vector2(481, 512)
-scale = Vector2(2, 1)
 noteHitTextPath = "uid://dq7lsqnc3kdqj"
 _socket = NodePath("../WebSocket")
 
