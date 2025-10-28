@@ -19,6 +19,8 @@ namespace Game.Stage
         float sceneWidth;
 
         List<VisualNote> notes = new();
+        double controllerDelay = 0.1;
+
         public override void _Ready()
         {
             hitbox.AreaEntered += AddActiveNote;
@@ -46,12 +48,17 @@ namespace Game.Stage
 
         public override void _Process(double delta)
         {
+            foreach (VisualNote note in notes)
+            {
+                float yDistance = note.GlobalPosition.Y - hitbox.GlobalPosition.Y;
+                if (yDistance > 0) note.Freeze(controllerDelay);
+            }
             //KeyboardControls(delta);
         }
 
         Vector2 ClampedPos(float pos)
         {
-            return new Vector2(Mathf.Min(Mathf.Max(pos, -216), 216), 0);
+            return new Vector2(Mathf.Min(Mathf.Max(pos, -216), 216), 0);  
         }
 
         private void Step(Foot foot, float time)
