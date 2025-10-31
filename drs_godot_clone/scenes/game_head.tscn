@@ -18,7 +18,8 @@ _socket = NodePath("../WebSocket")
 [node name="SongPlayer" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("8_i2cps")
 
-[node name="MidiController" type="Node2D" parent="." node_paths=PackedStringArray("Audio")]
+[node name="MidiController" type="Node2D" parent="." node_paths=PackedStringArray("Audio", "_stage")]
 script = ExtResource("6_yl7u8")
 NoteScene = ExtResource("5_4ukym")
 Audio = NodePath("../SongPlayer")
+_stage = NodePath("../Stage")

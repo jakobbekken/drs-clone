@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using Game.Notes;
 using System.Drawing;
+using System;
 namespace Game.Stage
 {
     public partial class Stage : Sprite2D
     {
-        int score = 0;
         [Export(PropertyHint.File)] string noteHitTextPath;
         [Export] float footXTolerance = 15f;
         [Export] float stepTime = 0.2f;
@@ -17,11 +17,15 @@ namespace Game.Stage
         [Export] Foot foot1;
         [Export] Area2D hitbox;
         [Export] WebSocket _socket;
-        public int size = 1;
+        public float halfSize = 1.0f;
+        public float unit = 1.0f;
+        public int score = 0;
 
         List<VisualNote> notes = new();
         public override void _Ready()
         {
+            halfSize = this.Texture.GetSize().X / 2f;
+            unit = halfSize/100;
             hitbox.AreaEntered += AddActiveNote;
             _socket.DataReceived += MoveFeet;
         }
@@ -33,9 +37,9 @@ namespace Game.Stage
 
         public void MoveFeet(float leftX, float rightX, string leftState, string rightState)
         {
-            foot0.Position = new Vector2(keyboardMovementSpeed * -leftX, foot0.Position.Y);
-            foot1.Position = new Vector2(keyboardMovementSpeed * -rightX, foot1.Position.Y);
-
+            foot0.Position = new Vector2(Mathf.Clamp((-leftX + 0.5f) * 2f * halfSize, -halfSize, halfSize), foot0.Position.Y);
+            foot1.Position = new Vector2(Mathf.Clamp((-rightX + 0.5f) * 2f * halfSize, -halfSize, halfSize), foot1.Position.Y);
+            
             if (leftState == "Press") { Step(foot0,stepTime); }
             else if (leftState == "Up") { Unstep(foot0); }
 

@@ -7,11 +7,13 @@ using System.Linq;
 using Game.Notes;
 using System.IO;
 using System.Net.Security;
+using Game.Stage;
 
 public partial class MidiController : Node
 {
     [Export] public PackedScene NoteScene { get; set; }
     [Export] public AudioStreamPlayer2D Audio;
+    [Export] public Stage _stage;
     string godotPath = "res://songs/mii_channel.mid";
     private MidiFile _midiFile;
     private TempoMap _tempoMap;
@@ -20,9 +22,18 @@ public partial class MidiController : Node
     private double _songStartTime;
     private int _nextNoteIndex = 0;
     private List<VisualNote> _activeNotes = new();
+    public float _stageSize = 0;
+    public Dictionary<int, List<string>> groups = new Dictionary<int, List<string>>
+    {
+        { 1, new List<string> { "C", "CSharp", "D" } },
+        { 2, new List<string> { "DSharp", "E", "F" } },
+        { 3, new List<string> { "FSharp", "G", "GSharp" } },
+        { 4, new List<string> { "A", "ASharp", "B" } }
+    };
 
     public override void _Ready()
     {
+        _stageSize = _stage.Texture.GetSize().X * _stage.Scale.X;
         string filePath = ProjectSettings.GlobalizePath(godotPath);
         _midiFile = MidiFile.Read(filePath);
         _tempoMap = _midiFile.GetTempoMap();
@@ -97,7 +108,9 @@ public partial class MidiController : Node
         AddChild(instance);
 
         // Example: horizontal position based on note pitch
-        float x = nextNote.NoteNumber % 12 * 50 + 100;
+        float columnWidth = _stageSize / 4f;
+        float stageCenterX = _stage.GlobalPosition.X;
+        float x = stageCenterX - _stageSize / 2f + columnWidth * (nextNote.NoteNumber % 4 + 0.5f);
         instance.Position = new Vector2(x, 0);
 
         _activeNotes.Add(instance);
