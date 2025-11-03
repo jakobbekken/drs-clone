@@ -57,6 +57,9 @@ class FootSniffer:
         self.max_from_origin_thresh = 30.0
         self.history_len = 50
 
+        self.screen_x: Optional[float] = None
+        self.screen_y: Optional[float] = None
+
     def _pick_feet(self):
         """Picks the two lowest (origin) points that have moved"""
         # return if feet already picked
@@ -272,6 +275,10 @@ class FootSniffer:
         if not self.start_time:
             self.start_time = time.time()
 
+        WIDTH, HEIGHT, CHANNELS = frame.shape
+        self.screen_x = WIDTH
+        self.screen_y = HEIGHT
+
         # preprocess
         gray = self.preprocess(frame)
 
@@ -335,7 +342,7 @@ class FootSniffer:
         if self.feet is not None:
             left = self.get_track_pos(self.feet[0])   # not actually left
             right = self.get_track_pos(self.feet[1])  # not actually right
-            return {'left': {'x': left[0], 'y': left[1]}, 'right': {'x': right[0], 'y': right[1]}}
+            return {'left': {'x': left[0] / self.screen_x, 'y': left[1] / self.screen_y}, 'right': {'x': right[0] / self.screen_x, 'y': right[1] / self.screen_y}}
         return None
 
     def run(self, display: bool = True):  # NOTE: might have to tweak the exit conditions for usability
