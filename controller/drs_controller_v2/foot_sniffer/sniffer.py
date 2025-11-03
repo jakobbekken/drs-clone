@@ -34,7 +34,7 @@ class FootSniffer:
         # Shi-Tomasi params
         self.corner_max = 10
         self.corner_quality = 0.3
-        self.corner_min_dist = 10
+        self.corner_min_dist = 40
         self.corner_block = 5
         
         # Lucas-Kanade params
