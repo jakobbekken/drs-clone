@@ -8,21 +8,36 @@ using Game.Notes;
 using System.IO;
 using System.Net.Security;
 using Game.Stage;
+using System.Runtime.CompilerServices;
 
 public partial class MidiController : Node
 {
+    // Scenes
     [Export] public PackedScene NoteScene { get; set; }
     [Export] public AudioStreamPlayer2D Audio;
+
+    // Stage
     [Export] public Stage _stage;
+    public float _stageSize;
+    public float _stagePosY;
+
+    // Notes
+    [Export] public float _noteSpawnHight = 0; // 0 is at y = 0
+    [Export] public double _noteSpeed;
+    public double _addBpmChange = 400;
+    private List<Note> _notes;
+    private List<Note> trueNotes = new();
+    private List<VisualNote> _activeNotes = new();
+    private int _nextNoteIndex;
+
+
+    //Midi file and song
     string godotPath = "res://songs/mii_channel.mid";
     private MidiFile _midiFile;
     private TempoMap _tempoMap;
-    private List<Note> _notes;
-    private List<Note> trueNotes = new();
     private double _songStartTime;
-    private int _nextNoteIndex = 0;
-    private List<VisualNote> _activeNotes = new();
-    public float _stageSize = 0;
+    private double _BPM;
+
     public Dictionary<int, List<string>> groups = new Dictionary<int, List<string>>
     {
         { 1, new List<string> { "C", "CSharp", "D" } },
@@ -33,26 +48,43 @@ public partial class MidiController : Node
 
     public override void _Ready()
     {
+        _stagePosY = _stage.Position.Y;
         _stageSize = _stage.Texture.GetSize().X * _stage.Scale.X;
+
         string filePath = ProjectSettings.GlobalizePath(godotPath);
         _midiFile = MidiFile.Read(filePath);
+
         _tempoMap = _midiFile.GetTempoMap();
         _notes = _midiFile.GetNotes().OrderBy(n => n.Time).ToList();
+        _noteSpeed = _BPM + _addBpmChange;
+        _noteSpawnHight = _stagePosY - 1200;
+
         long time = -1;
         foreach (var note in _notes)
         {
-            if(note.Time == time)
+            if (note.Time == time)
             {
                 time = note.Time;
-            } else
+            }
+            else
             {
                 time = note.Time;
                 trueNotes.Add(note);
             }
         }
+        float travelDistance = _noteSpawnHight - _stagePosY;
+        double travelTime = travelDistance / _noteSpeed; // in seconds
 
         _songStartTime = Time.GetTicksMsec() / 1000.0;
-        GetTree().CreateTimer(1.7).Timeout += () => Audio.Play();
+
+        double firstNoteTimeSec = TimeConverter
+            .ConvertTo<MetricTimeSpan>(trueNotes[0].Time, _tempoMap)
+            .TotalMicroseconds / 1_000_000.0;
+        double audioDelay = Math.Max(0, firstNoteTimeSec - travelTime);
+
+        GD.Print(GetStaticBPM());
+
+        GetTree().CreateTimer(audioDelay).Timeout += () => Audio.Play();
     }
 
     public override void _PhysicsProcess(double delta)
@@ -72,36 +104,14 @@ public partial class MidiController : Node
 
             if (elapsed >= noteTimeSec)
             {
-                
+                GetDynamicBPM(next);
                 TriggerNoteVisual(next);
                 _nextNoteIndex++;
             }
             else break;
         }
     }
-
-    public override void _Process(double delta)
-    {
-        for (int i = _activeNotes.Count - 1; i >= 0; i--)
-        {
-            var note = _activeNotes[i];
-            if (!IsInstanceValid(note))
-            {
-                _activeNotes.RemoveAt(i);
-                continue; // skip any access to disposed node
-            }
-
-            note.Position += new Vector2(0, (float)(200 * delta));
-
-            if (note.Position.Y > 1200)
-            {
-                note.QueueFree();
-                _activeNotes.RemoveAt(i);
-            }
-        }
-    }
-
-        private void TriggerNoteVisual(Note nextNote)
+    private void TriggerNoteVisual(Note nextNote)
     {
         // Spawn a note visual when the MIDI event hits
         var instance = NoteScene.Instantiate<VisualNote>();
@@ -111,9 +121,46 @@ public partial class MidiController : Node
         float columnWidth = _stageSize / 4f;
         float stageCenterX = _stage.GlobalPosition.X;
         float x = stageCenterX - _stageSize / 2f + columnWidth * (nextNote.NoteNumber % 4 + 0.5f);
-        instance.Position = new Vector2(x, 0);
+        instance.Position = new Vector2(x, _noteSpawnHight);
+        instance.speed = _noteSpeed;
 
         _activeNotes.Add(instance);
         GD.Print($"Triggered {nextNote.NoteName}");
     }
+
+    private string GetStaticBPM()
+    {
+        var tempoChanges = _tempoMap.GetTempoChanges();
+
+        // Collect all BPMs
+        List<double> bpms = tempoChanges.Select(t => t.Value.BeatsPerMinute).ToList();
+
+        if (bpms.Count == 0)
+        {
+            return "Unknown BPM";
+        }
+
+
+        double minBpm = bpms.Min();
+        double maxBpm = bpms.Max();
+
+        if (minBpm == maxBpm)
+        {
+            return $"BPM: {maxBpm:F2}";
+        }
+        else
+        {
+            return $"BPM: {minBpm:F2} - {maxBpm:F2}";
+        }
+    }
+    
+    private void GetDynamicBPM(Note nextNote)
+    {
+        var tempoAtNote = _tempoMap.GetTempoAtTime(new MidiTimeSpan(nextNote.Time));
+        double bpmAtNote = tempoAtNote.BeatsPerMinute;
+
+        _BPM = bpmAtNote;
+    }
+
 }
+

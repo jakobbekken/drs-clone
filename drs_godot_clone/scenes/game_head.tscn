@@ -13,6 +13,10 @@ position = Vector2(960, 1000)
 noteHitTextPath = "uid://dq7lsqnc3kdqj"
 _socket = NodePath("../WebSocket")
 
+[node name="Camera2D" type="Camera2D" parent="Stage"]
+position = Vector2(-0.25, -459)
+scale = Vector2(0.25, 1)
+
 [node name="WebSocket" parent="." instance=ExtResource("2_bae2j")]
 
 [node name="SongPlayer" type="AudioStreamPlayer2D" parent="."]
