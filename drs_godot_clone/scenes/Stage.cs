@@ -19,7 +19,7 @@ namespace Game.Stage
         float sceneWidth;
 
         List<VisualNote> notes = new();
-        double controllerDelay = 0.1;
+        double controllerDelay = 0.2;
 
         public override void _Ready()
         {
@@ -116,13 +116,13 @@ namespace Game.Stage
         {
             switch (yDistance)
             {
-                case var _ when yDistance < 10f:  //perfect
+                case var _ when yDistance < 10f: //perfect
                     return 3;
                 case var _ when yDistance < 25f: //good
                     return 2;
-                case var _ when yDistance < 45f: // ok
+                case var _ when yDistance < 45f: //ok
                     return 1;
-                default:                         // miss
+                default:                         //miss
                     return 0;
             }
         }
