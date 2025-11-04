@@ -11,14 +11,15 @@ config_version=5
 [application]
 
 config/name="DRS_godot_clone"
-run/main_scene="uid://bn8k2vbqtxq8m"
+run/main_scene="uid://diqwfirpjayem"
 config/features=PackedStringArray("4.5", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
 [display]
 
-window/size/viewport_width=1920
-window/size/viewport_height=1080
+window/size/viewport_width=960
+window/size/viewport_height=540
+window/stretch/mode="canvas_items"
 
 [dotnet]
 

@@ -9,7 +9,15 @@ namespace Game.Notes
         [Export] public float speed = 400f; // pixels per second
         public bool isHit = false;
 
+        bool hasFreezed = false;
+        double freezeTime;
+
         public override void _Process(double delta)
+        {
+            if (freezeTime > 0) freezeTime -= delta;
+            else Move(delta);
+        }
+        private void Move(double delta)
         {
             Position += new Vector2(0, (float)(speed * delta)); // move down
 
@@ -18,6 +26,13 @@ namespace Game.Notes
             {
                 QueueFree();
             }
+        }
+
+        public void Freeze(double time)
+        {
+            if (hasFreezed) return;
+            freezeTime = time;
+            hasFreezed = true;
         }
 
     }

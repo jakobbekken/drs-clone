@@ -12,7 +12,7 @@ public partial class MidiController : Node
 {
     [Export] public PackedScene NoteScene { get; set; }
     [Export] public AudioStreamPlayer2D Audio;
-    string godotPath = "res://songs/mii_channel.mid";
+    string godotPath;
     private MidiFile _midiFile;
     private TempoMap _tempoMap;
     private List<Note> _notes;
@@ -30,10 +30,11 @@ public partial class MidiController : Node
         long time = -1;
         foreach (var note in _notes)
         {
-            if(note.Time == time)
+            if (note.Time == time)
             {
                 time = note.Time;
-            } else
+            }
+            else
             {
                 time = note.Time;
                 trueNotes.Add(note);
@@ -61,7 +62,7 @@ public partial class MidiController : Node
 
             if (elapsed >= noteTimeSec)
             {
-                
+
                 TriggerNoteVisual(next);
                 _nextNoteIndex++;
             }
@@ -90,7 +91,7 @@ public partial class MidiController : Node
         }
     }
 
-        private void TriggerNoteVisual(Note nextNote)
+    private void TriggerNoteVisual(Note nextNote)
     {
         // Spawn a note visual when the MIDI event hits
         var instance = NoteScene.Instantiate<VisualNote>();
@@ -102,5 +103,10 @@ public partial class MidiController : Node
 
         _activeNotes.Add(instance);
         GD.Print($"Triggered {nextNote.NoteName}");
+    }
+    public void SetSong(string ogg, string mid)
+    {
+        Audio.Stream = GD.Load<AudioStream>(ogg);
+        godotPath = mid;
     }
 }

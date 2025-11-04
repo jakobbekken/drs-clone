@@ -1,0 +1,34 @@
+{
+    "mii_channel": {
+        "name": "Mii Channel Theme",
+        "artist": "Nintendo",
+        "difficulty": "hard",
+        "image": "res://sprites/foot-export.png",
+        ".ogg": "res://songs/mii_channel/mii_channel.ogg",
+        ".mid": "res://songs/mii_channel/mii_channel.mid"
+    },
+    "bohemian_rhapsody": {
+        "name": "Bohemian Rhapsody",
+        "artist": "Queen",
+        "difficulty": "hard",
+        "image": "res://sprites/foot-export.png",
+        ".ogg": "res://songs/bohemian_rhapsody/Bohemian-Rhapsody.ogg",
+        ".mid": "res://songs/bohemian_rhapsody/Bohemian-Rhapsody.mid"
+    },
+    "africa": {
+        "name": "Africa",
+        "artist": "Toto",
+        "difficulty": "hard",
+        "image": "res://sprites/foot-export.png",
+        ".ogg": "res://songs/africa/toto-africa.ogg",
+        ".mid": "res://songs/africa/toto-africa.mid"
+    },
+    "hes_a_pirate": {
+        "name": "PotC - He's a Pirate",
+        "artist": "Klaus Badelt and Hans Zimmer",
+        "difficulty": "hard",
+        "image": "res://sprites/foot-export.png",
+        ".ogg": "res://songs/hes_a_pirate/Pirates of the Caribbean - He's a Pirate.ogg",
+        ".mid": "res://songs/hes_a_pirate/Pirates of the Caribbean - He's a Pirate.mid"
+    }
+}
