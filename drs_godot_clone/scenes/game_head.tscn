@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://blhcvypbtgr4" path="res://scenes/GameHead.cs" id="1_slgwi"]
 [ext_resource type="PackedScene" uid="uid://dmy0c1dihuqod" path="res://scenes/web_socket.tscn" id="2_bae2j"]
 [ext_resource type="PackedScene" uid="uid://bttbw0sufdm3q" path="res://scenes/note.tscn" id="5_4ukym"]
-[ext_resource type="Script" uid="uid://bld4qp6gsun4g" path="res://scenes/ui/MainMenu.cs" id="6_slgwi"]
+[ext_resource type="Script" uid="uid://7w24cjjxh8kp" path="res://scenes/ToSceneButton.cs" id="6_slgwi"]
 [ext_resource type="Script" uid="uid://xv218n0ps4w6" path="res://scenes/MidiController.cs" id="6_yl7u8"]
 
 [node name="GameHead" type="Node2D" node_paths=PackedStringArray("controller")]
@@ -30,13 +30,12 @@ NoteScene = ExtResource("5_4ukym")
 Audio = NodePath("../SongPlayer")
 _stage = NodePath("../Stage")
 
-[node name="Button" type="Button" parent="." node_paths=PackedStringArray("startButton")]
+[node name="Button" type="Button" parent="."]
 offset_left = -420.0
 offset_top = -427.0
 offset_right = -169.0
 offset_bottom = -322.0
 theme_override_font_sizes/font_size = 24
-text = "↩ Return to menu"
+text = "↩ Return to main menu"
 script = ExtResource("6_slgwi")
-startPath = "uid://diqwfirpjayem"
-startButton = NodePath(".")
+scene = "uid://diqwfirpjayem"
