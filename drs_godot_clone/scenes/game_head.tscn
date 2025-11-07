@@ -1,11 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://bn8k2vbqtxq8m"]
+[gd_scene load_steps=6 format=3 uid="uid://bn8k2vbqtxq8m"]
 
 [ext_resource type="PackedScene" uid="uid://d14hoppf8beb5" path="res://scenes/stage.tscn" id="1_berbj"]
 [ext_resource type="Script" uid="uid://blhcvypbtgr4" path="res://scenes/GameHead.cs" id="1_slgwi"]
 [ext_resource type="PackedScene" uid="uid://dmy0c1dihuqod" path="res://scenes/web_socket.tscn" id="2_bae2j"]
 [ext_resource type="PackedScene" uid="uid://bttbw0sufdm3q" path="res://scenes/note.tscn" id="5_4ukym"]
 [ext_resource type="Script" uid="uid://xv218n0ps4w6" path="res://scenes/MidiController.cs" id="6_yl7u8"]
-[ext_resource type="AudioStream" path="res://songs/mii_channel.ogg" id="8_i2cps"]
 
 [node name="GameHead" type="Node2D" node_paths=PackedStringArray("controller")]
 script = ExtResource("1_slgwi")
@@ -23,7 +22,6 @@ scale = Vector2(0.25, 1)
 [node name="WebSocket" parent="." instance=ExtResource("2_bae2j")]
 
 [node name="SongPlayer" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("8_i2cps")
 
 [node name="MidiController" type="Node2D" parent="." node_paths=PackedStringArray("Audio", "_stage")]
 script = ExtResource("6_yl7u8")

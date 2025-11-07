@@ -5,7 +5,9 @@
         "difficulty": "hard",
         "image": "res://sprites/foot-export.png",
         ".ogg": "res://songs/mii_channel/mii_channel.ogg",
-        ".mid": "res://songs/mii_channel/mii_channel.mid"
+        ".mid": "res://songs/mii_channel/mii_channel.mid",
+        "channel": "0"
+        
     },
     "bohemian_rhapsody": {
         "name": "Bohemian Rhapsody",
@@ -13,7 +15,8 @@
         "difficulty": "hard",
         "image": "res://sprites/foot-export.png",
         ".ogg": "res://songs/bohemian_rhapsody/Bohemian-Rhapsody.ogg",
-        ".mid": "res://songs/bohemian_rhapsody/Bohemian-Rhapsody.mid"
+        ".mid": "res://songs/bohemian_rhapsody/Bohemian-Rhapsody.mid",
+        "channel": "3"
     },
     "africa": {
         "name": "Africa",
@@ -21,14 +24,16 @@
         "difficulty": "hard",
         "image": "res://sprites/foot-export.png",
         ".ogg": "res://songs/africa/toto-africa.ogg",
-        ".mid": "res://songs/africa/toto-africa.mid"
+        ".mid": "res://songs/africa/toto-africa.mid",
+        "channel": "0"
     },
     "hes_a_pirate": {
         "name": "PotC - He's a Pirate",
         "artist": "Klaus Badelt and Hans Zimmer",
         "difficulty": "hard",
         "image": "res://sprites/foot-export.png",
-        ".ogg": "res://songs/hes_a_pirate/Pirates of the Caribbean - He's a Pirate.ogg",
-        ".mid": "res://songs/hes_a_pirate/Pirates of the Caribbean - He's a Pirate.mid"
+        ".ogg": "res://songs/hes_a_pirate/hap.ogg",
+        ".mid": "res://songs/hes_a_pirate/hap.mid",
+        "channel": "0"
     }
 }

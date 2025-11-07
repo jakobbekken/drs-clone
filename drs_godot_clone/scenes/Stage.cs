@@ -24,13 +24,14 @@ namespace Game.Stage
         float sceneWidth;
 
         List<VisualNote> notes = new();
-        double controllerDelay = 0.2;
+        double controllerDelay = 0.05;
 
         public override void _Ready()
         {
             halfSize = this.Texture.GetSize().X / 2f;
             unit = halfSize / 100;
             hitbox.AreaEntered += AddActiveNote;
+            hitbox.AreaExited += RemoveActiveNote;
             _socket.DataReceived += MoveFeet;
             sceneWidth = Texture.GetWidth() / 2f * Scale.X;
         }
@@ -38,6 +39,11 @@ namespace Game.Stage
         private void AddActiveNote(Node2D body)
         {
             if (body is VisualNote note) notes.Add(note);
+        }
+
+        private void RemoveActiveNote(Node2D body)
+        {
+            if (body is VisualNote note) notes.Remove(note);
         }
 
         public void MoveFeet(float leftX, float rightX, string leftState, string rightState)

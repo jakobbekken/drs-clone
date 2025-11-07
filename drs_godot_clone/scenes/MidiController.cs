@@ -20,6 +20,7 @@ public partial class MidiController : Node
     [Export] public Stage _stage;
     public float _stageSize;
     public float _stagePosY;
+    Timer noteTimer = new Timer();
 
     // Notes
     [Export] public float _noteSpawnHight = 0; // 0 is at y = 0
@@ -37,6 +38,8 @@ public partial class MidiController : Node
     private TempoMap _tempoMap;
     private double _songStartTime;
     private double _BPM;
+    private bool _canSpawnNote = true;
+    private int _leadChannel;
 
     public Dictionary<int, List<string>> groups = new Dictionary<int, List<string>>
     {
@@ -72,6 +75,7 @@ public partial class MidiController : Node
                 trueNotes.Add(note);
             }
         }
+
         float travelDistance = _noteSpawnHight - _stagePosY;
         double travelTime = travelDistance / _noteSpeed; // in seconds
 
@@ -85,6 +89,16 @@ public partial class MidiController : Node
         GD.Print(GetStaticBPM());
 
         GetTree().CreateTimer(audioDelay).Timeout += () => Audio.Play();
+        AddChild(noteTimer); // Add the timer to the current node's children
+        noteTimer.WaitTime = 0.01;
+        noteTimer.OneShot = true; // Set to true for a single timeout
+        noteTimer.Timeout += SetNoteSpawn;
+        //noteTimer.Start(); // Enable this to prevent notes from spawning too close 
+    }
+
+    private void SetNoteSpawn()
+    {
+        _canSpawnNote = true;
     }
 
     public override void _PhysicsProcess(double delta)
@@ -105,7 +119,12 @@ public partial class MidiController : Node
             if (elapsed >= noteTimeSec)
             {
                 GetDynamicBPM(next);
-                TriggerNoteVisual(next);
+                if(_nextNoteIndex % 1==0 && _canSpawnNote && next.Channel == _leadChannel)
+                {
+                    TriggerNoteVisual(next);
+                    //_canSpawnNote = false; // Enable this to prevent notes from spawning too close
+                    //noteTimer.Start();
+                }
                 _nextNoteIndex++;
             }
             else break;
@@ -161,12 +180,12 @@ public partial class MidiController : Node
 
         _BPM = bpmAtNote;
     }
-    public void SetSong(string ogg, string mid)
+    public void SetSong(string ogg, string mid, int channel)
     {
         Audio.Stream = GD.Load<AudioStream>(ogg);
         godotPath = mid;
+        _leadChannel = channel;
     }
-
 }
 
 

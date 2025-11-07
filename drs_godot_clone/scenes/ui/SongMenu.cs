@@ -26,11 +26,11 @@ public partial class SongMenu : Node2D
         songList.AddChild(entry);
     }
 
-    void SwitchSceneToSong(string midiFile, string oggFile)
+    void SwitchSceneToSong(string midiFile, string oggFile, int channel)
     {
         PackedScene scene = GD.Load<PackedScene>(gameScene);
         var thing = scene.Instantiate<GameHead>();
-        thing.SetSong(oggFile, midiFile);
+        thing.SetSong(oggFile, midiFile, channel);
         AddSibling(thing);
         QueueFree();
     }
