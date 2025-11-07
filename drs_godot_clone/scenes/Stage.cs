@@ -21,13 +21,15 @@ namespace Game.Stage
         public float unit = 1.0f;
         public int score = 0;
 
+        float sceneWidth;
+
         List<VisualNote> notes = new();
         double controllerDelay = 0.2;
 
         public override void _Ready()
         {
             halfSize = this.Texture.GetSize().X / 2f;
-            unit = halfSize/100;
+            unit = halfSize / 100;
             hitbox.AreaEntered += AddActiveNote;
             _socket.DataReceived += MoveFeet;
             sceneWidth = Texture.GetWidth() / 2f * Scale.X;
@@ -42,8 +44,8 @@ namespace Game.Stage
         {
             foot0.Position = new Vector2(Mathf.Clamp((-leftX + 0.5f) * 2f * halfSize, -halfSize, halfSize), foot0.Position.Y);
             foot1.Position = new Vector2(Mathf.Clamp((-rightX + 0.5f) * 2f * halfSize, -halfSize, halfSize), foot1.Position.Y);
-            
-            if (leftState == "Press") { Step(foot0,stepTime); }
+
+            if (leftState == "Press") { Step(foot0, stepTime); }
             else if (leftState == "Up") { Unstep(foot0); }
 
             if (rightState == "Press") { Step(foot1, stepTime); }
