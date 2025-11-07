@@ -30,5 +30,13 @@
         "image": "res://sprites/foot-export.png",
         ".ogg": "res://songs/hes_a_pirate/Pirates of the Caribbean - He's a Pirate.ogg",
         ".mid": "res://songs/hes_a_pirate/Pirates of the Caribbean - He's a Pirate.mid"
+    },
+    "boogie_wonderland": {
+        "name": "Boogie Wonderland - from Happy Feet",
+        "artist": "Earth, Wind & Fire",
+        "difficulty": "hard",
+        "image": "res://sprites/foot-export.png",
+        ".ogg": "res://songs/songs/boogie_wonderland/Boogie-Wonderland.ogg",
+        ".mid": "res://songs/songs/boogie_wonderland/Boogie-Wonderland.mid"
     }
 }

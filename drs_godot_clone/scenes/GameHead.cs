@@ -7,6 +7,6 @@ public partial class GameHead : Node2D
 
     public void SetSong(string ogg, string mid)
     {
-        controller.SetSong(ogg, mid);
+        controller.SetSong(ogg, mid, 3);
     }
 }
