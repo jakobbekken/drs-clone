@@ -153,7 +153,7 @@ public partial class MidiController : Node
             return $"BPM: {minBpm:F2} - {maxBpm:F2}";
         }
     }
-    
+
     private void GetDynamicBPM(Note nextNote)
     {
         var tempoAtNote = _tempoMap.GetTempoAtTime(new MidiTimeSpan(nextNote.Time));
@@ -161,12 +161,13 @@ public partial class MidiController : Node
 
         _BPM = bpmAtNote;
     }
-
-}
-
     public void SetSong(string ogg, string mid)
     {
         Audio.Stream = GD.Load<AudioStream>(ogg);
         godotPath = mid;
     }
+
 }
+
+
+
