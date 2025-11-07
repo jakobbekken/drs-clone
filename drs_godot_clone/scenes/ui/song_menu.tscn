@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://b6vb5qk1ql5t7"]
+
+[ext_resource type="Script" uid="uid://c0garo416muid" path="res://scenes/ui/SongMenu.cs" id="1_avljs"]
+
+[node name="SongMenu" type="Node2D" node_paths=PackedStringArray("songList")]
+script = ExtResource("1_avljs")
+gameScene = "uid://bn8k2vbqtxq8m"
+songEntryFile = "uid://dj06a6cf6kuox"
+jsonDir = "res://songs"
+songList = NodePath("ScrollContainer/VBoxContainer")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+offset_left = 192.0
+offset_top = 6.0
+offset_right = 768.0
+offset_bottom = 539.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+layout_mode = 2

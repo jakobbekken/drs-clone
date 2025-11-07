@@ -164,3 +164,9 @@ public partial class MidiController : Node
 
 }
 
+    public void SetSong(string ogg, string mid)
+    {
+        Audio.Stream = GD.Load<AudioStream>(ogg);
+        godotPath = mid;
+    }
+}
