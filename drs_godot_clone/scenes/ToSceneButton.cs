@@ -6,6 +6,14 @@ public partial class ToSceneButton : Button
     [Export(PropertyHint.File)] string scene;
     public override void _Ready()
     {
-        this.Pressed += () => GetTree().ChangeSceneToFile(scene);
+        this.Pressed += SwitchScene;
+
     }
+
+    private void SwitchScene()
+    {
+        GetTree().ChangeSceneToFile(scene);
+        GetParent().QueueFree();
+    }
+
 }
