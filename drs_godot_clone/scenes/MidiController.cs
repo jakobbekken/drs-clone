@@ -32,7 +32,7 @@ public partial class MidiController : Node
 
 
     //Midi file and song
-    string godotPath = "res://songs/mii_channel.mid";
+    string godotPath = "";
     private MidiFile _midiFile;
     private TempoMap _tempoMap;
     private double _songStartTime;
