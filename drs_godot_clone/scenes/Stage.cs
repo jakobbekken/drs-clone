@@ -1,16 +1,15 @@
-using Game.VFX;
 using Godot;
 using System.Collections.Generic;
-using System.Diagnostics.Tracing;
+using Game.VFX;
 using Game.Notes;
-using System.Drawing;
 using System;
+
 namespace Game.Stage
 {
     public partial class Stage : Sprite2D
     {
         [Export(PropertyHint.File)] string noteHitTextPath;
-        [Export] float footXTolerance = 15f;
+        [Export] float footXTolerance = 140f;
         [Export] float stepTime = 0.2f;
         [Export] float keyboardMovementSpeed = 250f;
         [Export] Foot foot0;
@@ -31,14 +30,22 @@ namespace Game.Stage
             halfSize = this.Texture.GetSize().X / 2f;
             unit = halfSize / 100;
             hitbox.AreaEntered += AddActiveNote;
+            hitbox.AreaExited += RemoveActiveNote;
             _socket.DataReceived += MoveFeet;
             sceneWidth = Texture.GetWidth() / 2f * Scale.X;
         }
 
-        private void AddActiveNote(Node2D body)
+        private void RemoveActiveNote(Area2D area)
         {
-            if (body is VisualNote note) notes.Add(note);
+            if (area is VisualNote note) notes.Remove(note);
         }
+
+
+        private void AddActiveNote(Area2D area)
+        {
+            if (area is VisualNote note) notes.Add(note);
+        }
+
 
         public void MoveFeet(float leftX, float rightX, string leftState, string rightState)
         {
@@ -56,6 +63,11 @@ namespace Game.Stage
         {
             foreach (VisualNote note in notes)
             {
+                if (note == null)
+                {
+                    notes.Remove(note);
+                    continue;
+                }
                 float yDistance = note.GlobalPosition.Y - hitbox.GlobalPosition.Y;
                 if (yDistance > 0) note.Freeze(controllerDelay);
             }

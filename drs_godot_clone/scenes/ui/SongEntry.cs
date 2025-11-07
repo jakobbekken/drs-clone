@@ -2,6 +2,8 @@ using Godot;
 using System;
 using Godot.Collections;
 
+namespace Game.UI;
+
 public partial class SongEntry : Control
 {
     [Export] Button selectButton;
