@@ -17,6 +17,7 @@ public partial class MidiController : Node
     [Export] public Stage _stage;
     public float _stageSize;
     public float _stagePosY;
+    Timer noteTimer = new Timer();
 
     // Notes
     [Export] public float _noteSpawnHight = 0; // 0 is at y = 0
@@ -34,8 +35,8 @@ public partial class MidiController : Node
     private TempoMap _tempoMap;
     private double _songStartTime;
     private double _BPM;
-    double noteDelay = 0.1;
-    double timeSinceLastSpawnedNote = 0;
+    private bool _canSpawnNote = true;
+    private int _leadChannel;
 
     public Dictionary<int, List<string>> groups = new Dictionary<int, List<string>>
     {
@@ -71,6 +72,7 @@ public partial class MidiController : Node
                 trueNotes.Add(note);
             }
         }
+
         float travelDistance = _noteSpawnHight - _stagePosY;
         double travelTime = travelDistance / _noteSpeed; // in seconds
 
@@ -84,17 +86,22 @@ public partial class MidiController : Node
         GD.Print(GetStaticBPM());
 
         GetTree().CreateTimer(audioDelay).Timeout += () => Audio.Play();
+        AddChild(noteTimer); // Add the timer to the current node's children
+        noteTimer.WaitTime = 0.01;
+        noteTimer.OneShot = true; // Set to true for a single timeout
+        noteTimer.Timeout += SetNoteSpawn;
+        //noteTimer.Start(); // Enable this to prevent notes from spawning too close 
+    }
+
+    private void SetNoteSpawn()
+    {
+        _canSpawnNote = true;
     }
 
     public override void _PhysicsProcess(double delta)
     {
         if (_nextNoteIndex >= trueNotes.Count)
             return;
-        if (timeSinceLastSpawnedNote > 0)
-        {
-            timeSinceLastSpawnedNote -= delta;
-        }
-
         // Current elapsed time (in seconds)
         double elapsed = (Time.GetTicksMsec() / 1000.0) - _songStartTime;
 
@@ -108,7 +115,12 @@ public partial class MidiController : Node
             if (elapsed >= noteTimeSec)
             {
                 GetDynamicBPM(next);
-                TriggerNoteVisual(next);
+                if(_nextNoteIndex % 1==0 && _canSpawnNote && next.Channel == _leadChannel)
+                {
+                    TriggerNoteVisual(next);
+                    //_canSpawnNote = false; // Enable this to prevent notes from spawning too close
+                    //noteTimer.Start();
+                }
                 _nextNoteIndex++;
             }
             else break;
@@ -116,12 +128,9 @@ public partial class MidiController : Node
     }
     private void TriggerNoteVisual(Note nextNote)
     {
-        if (timeSinceLastSpawnedNote > 0) return;
-        // Spawn a note visual when the MIDI event hits
         var instance = NoteScene.Instantiate<VisualNote>();
         AddChild(instance);
-        timeSinceLastSpawnedNote = noteDelay;
-        // Example: horizontal position based on note pitch
+        
         float columnWidth = _stageSize / 4f;
         float stageCenterX = _stage.GlobalPosition.X;
         float x = stageCenterX - _stageSize / 2f + columnWidth * (nextNote.NoteNumber % 4 + 0.5f);
@@ -165,11 +174,13 @@ public partial class MidiController : Node
 
         _BPM = bpmAtNote;
     }
-    public void SetSong(string ogg, string mid, int difficulty)
+    public void SetSong(string ogg, string mid, int channel)
     {
         Audio.Stream = GD.Load<AudioStream>(ogg);
         godotPath = mid;
-        noteDelay = 1.45 - difficulty * 0.45;
+        _leadChannel = channel;
     }
-
 }
+
+
+

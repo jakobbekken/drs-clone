@@ -23,7 +23,7 @@ namespace Game.Stage
         float sceneWidth;
 
         List<VisualNote> notes = new();
-        double controllerDelay = 0.2;
+        double controllerDelay = 0.05;
 
         public override void _Ready()
         {
@@ -46,6 +46,10 @@ namespace Game.Stage
             if (area is VisualNote note) notes.Add(note);
         }
 
+        private void RemoveActiveNote(Node2D body)
+        {
+            if (body is VisualNote note) notes.Remove(note);
+        }
 
         public void MoveFeet(float leftX, float rightX, string leftState, string rightState)
         {

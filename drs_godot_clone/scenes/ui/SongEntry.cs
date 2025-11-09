@@ -18,6 +18,7 @@ public partial class SongEntry : Control
 
     string songMid;
     string songOgg;
+    int channel;
 
     public override void _Ready()
     {
@@ -37,9 +38,9 @@ public partial class SongEntry : Control
         }
     }
 
-    public void OnStartButtonPressed(Action<string, string> action)
+    public void OnStartButtonPressed(Action<string, string, int> action)
     {
-        startButton.Pressed += () => { action.Invoke(songMid, songOgg); };
+        startButton.Pressed += () => { action.Invoke(songMid, songOgg, channel); };
     }
 
 
@@ -53,6 +54,7 @@ public partial class SongEntry : Control
         image.Texture = imgFile;
         songOgg = song_entry[".ogg"];
         songMid = song_entry[".mid"];
+        channel = int.Parse(song_entry["channel"]);
     }
 
 
