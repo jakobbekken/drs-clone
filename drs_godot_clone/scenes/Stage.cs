@@ -21,7 +21,7 @@ namespace Game.Stage
         [Export] float minStageRange = 0.2f;
         public float halfSize = 1.0f;
         public float unit = 1.0f;
-        public int score = 0;
+        public int score { get; private set; } = 0;
 
         float sceneWidth;
 
@@ -36,6 +36,8 @@ namespace Game.Stage
             hitbox.AreaExited += RemoveActiveNote;
             _socket.DataReceived += MoveFeet;
             sceneWidth = Texture.GetWidth() / 2f * Scale.X;
+            minStageRange = (100 - Settings.ActiveSceneArea) / 2;
+            maxStageRange = 100 - minStageRange;
         }
 
         private void RemoveActiveNote(Area2D area)
@@ -50,7 +52,7 @@ namespace Game.Stage
 
         private float Normalize(float input, float max, float min)
         {
-            return Mathf.Clamp((input - min) / (max - min),0f,1f); // Return a value between 0, and 1 
+            return Mathf.Clamp((input - min) / (max - min), 0f, 1f); // Return a value between 0, and 1 
         }
 
         public void MoveFeet(float leftX, float rightX, string leftState, string rightState)
@@ -74,11 +76,6 @@ namespace Game.Stage
         {
             foreach (VisualNote note in notes)
             {
-                if (note == null)
-                {
-                    notes.Remove(note);
-                    continue;
-                }
                 float yDistance = note.GlobalPosition.Y - hitbox.GlobalPosition.Y;
                 if (yDistance > 0) note.Freeze(controllerDelay);
             }

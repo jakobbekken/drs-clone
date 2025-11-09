@@ -1,0 +1,113 @@
+[gd_scene load_steps=4 format=3 uid="uid://dtf5uc2deyf3y"]
+
+[ext_resource type="Script" uid="uid://cxmubmiiverj7" path="res://scenes/ui/SettingsMenu.cs" id="1_qwcqe"]
+[ext_resource type="Script" uid="uid://bphlaqyquvg5u" path="res://scenes/ui/DisplayValue.cs" id="2_mhswj"]
+[ext_resource type="PackedScene" uid="uid://dpido3l8vbn6r" path="res://scenes/ui/return_to_menu_button.tscn" id="3_x3vyp"]
+
+[node name="SettingsMenu" type="Node2D" node_paths=PackedStringArray("activeSceneArea", "noteSpeed", "difficulty")]
+script = ExtResource("1_qwcqe")
+activeSceneArea = NodePath("SceneArea/HSlider")
+noteSpeed = NodePath("Speed/HSlider")
+difficulty = NodePath("Difficulty/HSlider")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1917.0
+offset_bottom = 1082.0
+metadata/_edit_lock_ = true
+
+[node name="ReturnToMenuButton" parent="Control" instance=ExtResource("3_x3vyp")]
+layout_mode = 0
+offset_left = 84.0
+offset_top = 63.0
+offset_right = 416.0
+offset_bottom = 168.0
+
+[node name="SceneArea" type="Label" parent="."]
+offset_left = 586.0
+offset_top = 379.0
+offset_right = 798.0
+offset_bottom = 413.0
+theme_override_font_sizes/font_size = 24
+text = "Active Scene Area:"
+
+[node name="HSlider" type="HSlider" parent="SceneArea"]
+layout_mode = 0
+offset_left = 290.0
+offset_top = 9.0
+offset_right = 628.0
+offset_bottom = 25.0
+min_value = 20.0
+step = 5.0
+value = 100.0
+
+[node name="DisplayValue" type="Label" parent="SceneArea/HSlider" node_paths=PackedStringArray("slider")]
+layout_mode = 0
+offset_left = -47.0
+offset_top = -3.0
+offset_right = -7.0
+offset_bottom = 20.0
+text = "1"
+horizontal_alignment = 2
+script = ExtResource("2_mhswj")
+slider = NodePath("..")
+
+[node name="Speed" type="Label" parent="."]
+offset_left = 586.0
+offset_top = 424.0
+offset_right = 798.0
+offset_bottom = 458.0
+theme_override_font_sizes/font_size = 24
+text = "Note Speed:"
+
+[node name="HSlider" type="HSlider" parent="Speed"]
+layout_mode = 0
+offset_left = 290.0
+offset_top = 9.0
+offset_right = 628.0
+offset_bottom = 25.0
+min_value = 80.0
+max_value = 300.0
+step = 5.0
+value = 100.0
+
+[node name="DisplayValue" type="Label" parent="Speed/HSlider" node_paths=PackedStringArray("slider")]
+layout_mode = 0
+offset_left = -47.0
+offset_top = -3.0
+offset_right = -7.0
+offset_bottom = 20.0
+text = "1"
+horizontal_alignment = 2
+script = ExtResource("2_mhswj")
+slider = NodePath("..")
+
+[node name="Difficulty" type="Label" parent="."]
+offset_left = 586.0
+offset_top = 469.0
+offset_right = 798.0
+offset_bottom = 503.0
+theme_override_font_sizes/font_size = 24
+text = "Base Difficulty:"
+
+[node name="HSlider" type="HSlider" parent="Difficulty"]
+layout_mode = 0
+offset_left = 290.0
+offset_top = 9.0
+offset_right = 628.0
+offset_bottom = 25.0
+min_value = 1.0
+max_value = 3.0
+value = 1.0
+
+[node name="DisplayValue" type="Label" parent="Difficulty/HSlider" node_paths=PackedStringArray("slider")]
+layout_mode = 0
+offset_left = -47.0
+offset_top = -3.0
+offset_right = -7.0
+offset_bottom = 20.0
+text = "1"
+horizontal_alignment = 2
+script = ExtResource("2_mhswj")
+slider = NodePath("..")

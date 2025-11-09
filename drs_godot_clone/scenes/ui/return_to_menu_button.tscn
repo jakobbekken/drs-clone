@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://dpido3l8vbn6r"]
+
+[ext_resource type="Script" uid="uid://7w24cjjxh8kp" path="res://scenes/ToSceneButton.cs" id="1_o30fj"]
+
+[node name="ReturnToMenuButton" type="Button"]
+offset_left = -420.0
+offset_top = -427.0
+offset_right = -88.0
+offset_bottom = -322.0
+theme_override_font_sizes/font_size = 24
+text = "↩ Return to main menu"
+script = ExtResource("1_o30fj")
+scene = "uid://diqwfirpjayem"
