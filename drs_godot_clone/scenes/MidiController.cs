@@ -20,8 +20,8 @@ public partial class MidiController : Node
     Timer noteTimer = new Timer();
 
     // Notes
-    [Export] public float _noteSpawnHight = 0; // 0 is at y = 0
-    [Export] public double _noteSpeed;
+    public float _noteSpawnHeight = 0; // 0 is at y = 0
+    public double _noteSpeed;
     public double _addBpmChange = 400;
     private List<Note> _notes;
     private List<Note> trueNotes = new();
@@ -56,8 +56,8 @@ public partial class MidiController : Node
 
         _tempoMap = _midiFile.GetTempoMap();
         _notes = _midiFile.GetNotes().OrderBy(n => n.Time).ToList();
-        _noteSpeed = _BPM + _addBpmChange;
-        _noteSpawnHight = _stagePosY - 1200;
+        _noteSpeed = (_BPM + _addBpmChange) * (Settings.NoteSpeed / 100);
+        _noteSpawnHeight = (_stagePosY - 1200) * (Settings.NoteSpeed / 100);
 
         long time = -1;
         foreach (var note in _notes)
@@ -73,7 +73,7 @@ public partial class MidiController : Node
             }
         }
 
-        float travelDistance = _noteSpawnHight - _stagePosY;
+        float travelDistance = _noteSpawnHeight - _stagePosY;
         double travelTime = travelDistance / _noteSpeed; // in seconds
 
         _songStartTime = Time.GetTicksMsec() / 1000.0;
@@ -133,7 +133,7 @@ public partial class MidiController : Node
         float columnWidth = _stageSize / 4f;
         float stageCenterX = _stage.GlobalPosition.X;
         float x = stageCenterX - _stageSize / 2f + columnWidth * (nextNote.NoteNumber % 4 + 0.5f);
-        instance.Position = new Vector2(x, _noteSpawnHight);
+        instance.Position = new Vector2(x, _noteSpawnHeight);
         instance.speed = _noteSpeed;
 
         _activeNotes.Add(instance);

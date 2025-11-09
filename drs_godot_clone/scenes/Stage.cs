@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Game.VFX;
 using Game.Notes;
 using System;
+using System.Runtime.CompilerServices;
 
 namespace Game.Stage
 {
@@ -16,6 +17,8 @@ namespace Game.Stage
         [Export] Foot foot1;
         [Export] Area2D hitbox;
         [Export] WebSocket _socket;
+        [Export] float maxStageRange = 0.6f;
+        [Export] float minStageRange = 0.2f;
         public float halfSize = 1.0f;
         public float unit = 1.0f;
         public int score { get; private set; } = 0;
@@ -33,6 +36,8 @@ namespace Game.Stage
             hitbox.AreaExited += RemoveActiveNote;
             _socket.DataReceived += MoveFeet;
             sceneWidth = Texture.GetWidth() / 2f * Scale.X;
+            minStageRange = (100 - Settings.ActiveSceneArea) / 2;
+            maxStageRange = 100 - minStageRange;
         }
 
         private void RemoveActiveNote(Area2D area)
@@ -40,16 +45,25 @@ namespace Game.Stage
             if (area is VisualNote note) notes.Remove(note);
         }
 
-
         private void AddActiveNote(Area2D area)
         {
             if (area is VisualNote note) notes.Add(note);
         }
 
+        private float Normalize(float input, float max, float min)
+        {
+            return Mathf.Clamp((input - min) / (max - min), 0f, 1f); // Return a value between 0, and 1 
+        }
+
         public void MoveFeet(float leftX, float rightX, string leftState, string rightState)
         {
-            foot0.Position = new Vector2(Mathf.Clamp((-leftX + 0.5f) * 2f * halfSize, -halfSize, halfSize), foot0.Position.Y);
-            foot1.Position = new Vector2(Mathf.Clamp((-rightX + 0.5f) * 2f * halfSize, -halfSize, halfSize), foot1.Position.Y);
+            float maxStage = halfSize - foot0.Texture.GetSize().X / 2 * foot0.Transform.Scale.X; // We multiply by scale in case the foot is scaled in game
+            float minStage = -halfSize + foot1.Texture.GetSize().X / 2 * foot1.Transform.Scale.X;
+            float normLeft = -Normalize(leftX, maxStageRange, minStageRange);
+            float normRight = -Normalize(rightX, maxStageRange, minStageRange);
+
+            foot0.Position = new Vector2(Mathf.Clamp((normLeft + 0.5f) * 2f * halfSize, minStage, maxStage), foot0.Position.Y);
+            foot1.Position = new Vector2(Mathf.Clamp((normRight + 0.5f) * 2f * halfSize, minStage, maxStage), foot1.Position.Y);
 
             if (leftState == "Press") { Step(foot0, stepTime); }
             else if (leftState == "Up") { Unstep(foot0); }

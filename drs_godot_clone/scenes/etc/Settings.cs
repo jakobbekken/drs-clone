@@ -9,7 +9,7 @@ public partial class Settings : Node
 
     static Settings instance;
     float activeSceneArea = 60;
-    float noteSpeed = 200;
+    float noteSpeed = 100;
     int difficulty = 1;
     public override void _Ready()
     {

@@ -67,10 +67,10 @@ offset_left = 290.0
 offset_top = 9.0
 offset_right = 628.0
 offset_bottom = 25.0
-min_value = 50.0
-max_value = 500.0
-step = 10.0
-value = 50.0
+min_value = 80.0
+max_value = 300.0
+step = 5.0
+value = 100.0
 
 [node name="DisplayValue" type="Label" parent="Speed/HSlider" node_paths=PackedStringArray("slider")]
 layout_mode = 0
