@@ -42,7 +42,7 @@
         "difficulty": "hard",
         "image": "res://sprites/foot-export.png",
         ".ogg": "res://songs/songs/boogie_wonderland/Boogie-Wonderland.ogg",
-        ".mid": "res://songs/songs/boogie_wonderland/Boogie-Wonderland.mid"
+        ".mid": "res://songs/songs/boogie_wonderland/Boogie-Wonderland.mid",
         "channel": "0"
     }
 }
