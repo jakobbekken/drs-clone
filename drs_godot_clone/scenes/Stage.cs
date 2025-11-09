@@ -18,7 +18,7 @@ namespace Game.Stage
         [Export] WebSocket _socket;
         public float halfSize = 1.0f;
         public float unit = 1.0f;
-        public int score = 0;
+        public int score { get; private set; } = 0;
 
         float sceneWidth;
 

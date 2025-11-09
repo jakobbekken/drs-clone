@@ -1,0 +1,46 @@
+[gd_scene load_steps=2 format=3 uid="uid://bpuug68fqfhws"]
+
+[ext_resource type="Script" uid="uid://bcf05kobdo43t" path="res://scenes/ScoreDisplay.cs" id="1_pv62o"]
+
+[node name="Scoring" type="Control" node_paths=PackedStringArray("score", "highScore")]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 1070.0
+offset_top = -395.0
+offset_right = 1244.0
+offset_bottom = -333.0
+script = ExtResource("1_pv62o")
+score = NodePath("Score")
+highScore = NodePath("HighScore")
+
+[node name="SText" type="Label" parent="."]
+layout_mode = 0
+offset_right = 52.0
+offset_bottom = 23.0
+theme_override_font_sizes/font_size = 24
+text = "Score: "
+
+[node name="HSText" type="Label" parent="."]
+layout_mode = 0
+offset_top = 25.0
+offset_right = 52.0
+offset_bottom = 48.0
+theme_override_font_sizes/font_size = 24
+text = "High Score: "
+
+[node name="Score" type="Label" parent="."]
+layout_mode = 0
+offset_left = 143.0
+offset_right = 195.0
+offset_bottom = 34.0
+theme_override_font_sizes/font_size = 24
+text = "0"
+
+[node name="HighScore" type="Label" parent="."]
+layout_mode = 0
+offset_left = 143.0
+offset_top = 25.0
+offset_right = 195.0
+offset_bottom = 59.0
+theme_override_font_sizes/font_size = 24
+text = "0"

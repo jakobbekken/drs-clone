@@ -7,7 +7,6 @@ public partial class ToSceneButton : Button
     public override void _Ready()
     {
         this.Pressed += SwitchScene;
-
     }
 
     private void SwitchScene()
