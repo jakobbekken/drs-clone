@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bn8k2vbqtxq8m"]
+[gd_scene load_steps=8 format=3 uid="uid://bn8k2vbqtxq8m"]
 
 [ext_resource type="PackedScene" uid="uid://d14hoppf8beb5" path="res://scenes/stage.tscn" id="1_berbj"]
 [ext_resource type="Script" uid="uid://blhcvypbtgr4" path="res://scenes/GameHead.cs" id="1_slgwi"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bttbw0sufdm3q" path="res://scenes/note.tscn" id="5_4ukym"]
 [ext_resource type="Script" uid="uid://7w24cjjxh8kp" path="res://scenes/ToSceneButton.cs" id="6_slgwi"]
 [ext_resource type="Script" uid="uid://xv218n0ps4w6" path="res://scenes/MidiController.cs" id="6_yl7u8"]
+[ext_resource type="Texture2D" uid="uid://cdjjaxreydqlh" path="res://sprites/Stage-background.png" id="7_yl7u8"]
 
 [node name="GameHead" type="Node2D" node_paths=PackedStringArray("controller")]
 script = ExtResource("1_slgwi")
@@ -39,3 +40,9 @@ theme_override_font_sizes/font_size = 24
 text = "↩ Return to main menu"
 script = ExtResource("6_slgwi")
 scene = "uid://diqwfirpjayem"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -1000
+position = Vector2(480.00003, 98)
+scale = Vector2(101.6, 146.4)
+texture = ExtResource("7_yl7u8")
