@@ -2,6 +2,8 @@ using System;
 using Godot;
 using Godot.Collections;
 
+namespace Game.UI;
+
 public partial class SongMenu : Node2D
 {
     [Export(PropertyHint.File)] string gameScene;

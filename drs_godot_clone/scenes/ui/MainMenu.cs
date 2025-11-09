@@ -1,6 +1,8 @@
 using Godot;
 using System;
 
+namespace Game.UI;
+
 public partial class MainMenu : Node2D
 {
     [Export(PropertyHint.File)] string startPath;

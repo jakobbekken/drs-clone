@@ -23,7 +23,7 @@ The game is built using Godot Engine - .NET (4.5) and as such it is required to 
 Windows is recommended as that is what this guide is ment for.
 
 #### Installing Godot
-1. Install godot Godot Engine - .NET (4.5) from here: https://godotengine.org/download/windows/
+1. Install godot Godot Engine - .NET (4.5) from here: [https://godotengine.org/download/archive/4.5-stable/](https://godotengine.org/download/archive/4.5-stable/)
 
 2. Unzip it and launch "Godot_v4.5-stable_mono_win64.exe". 
 

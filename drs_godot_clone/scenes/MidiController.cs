@@ -5,10 +5,7 @@ using Melanchall.DryWetMidi.Interaction;
 using System.Collections.Generic;
 using System.Linq;
 using Game.Notes;
-using System.IO;
-using System.Net.Security;
 using Game.Stage;
-using System.Runtime.CompilerServices;
 
 public partial class MidiController : Node
 {
@@ -105,6 +102,10 @@ public partial class MidiController : Node
     {
         if (_nextNoteIndex >= trueNotes.Count)
             return;
+        if (timeSinceLastSpawnedNote > 0)
+        {
+            timeSinceLastSpawnedNote -= delta;
+        }
 
         // Current elapsed time (in seconds)
         double elapsed = (Time.GetTicksMsec() / 1000.0) - _songStartTime;
@@ -132,10 +133,11 @@ public partial class MidiController : Node
     }
     private void TriggerNoteVisual(Note nextNote)
     {
+        if (timeSinceLastSpawnedNote > 0) return;
         // Spawn a note visual when the MIDI event hits
         var instance = NoteScene.Instantiate<VisualNote>();
         AddChild(instance);
-
+        timeSinceLastSpawnedNote = noteDelay;
         // Example: horizontal position based on note pitch
         float columnWidth = _stageSize / 4f;
         float stageCenterX = _stage.GlobalPosition.X;

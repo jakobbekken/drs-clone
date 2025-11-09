@@ -35,5 +35,14 @@
         ".ogg": "res://songs/hes_a_pirate/hap.ogg",
         ".mid": "res://songs/hes_a_pirate/hap.mid",
         "channel": "0"
+    },
+    "boogie_wonderland": {
+        "name": "Boogie Wonderland - from Happy Feet",
+        "artist": "Earth, Wind & Fire",
+        "difficulty": "hard",
+        "image": "res://sprites/foot-export.png",
+        ".ogg": "res://songs/songs/boogie_wonderland/Boogie-Wonderland.ogg",
+        ".mid": "res://songs/songs/boogie_wonderland/Boogie-Wonderland.mid"
+        "channel": "0"
     }
 }

@@ -5,37 +5,41 @@
 [node name="MainMenu" type="Node2D" node_paths=PackedStringArray("startButton", "optionsButton", "quitButton")]
 script = ExtResource("1_7w7rl")
 startPath = "uid://b6vb5qk1ql5t7"
-startButton = NodePath("StartButton")
-optionsButton = NodePath("OptionsButton")
-quitButton = NodePath("QuitButton")
+startButton = NodePath("CanvasLayer/StartButton")
+optionsButton = NodePath("CanvasLayer/OptionsButton")
+quitButton = NodePath("CanvasLayer/QuitButton")
 
-[node name="Label" type="Label" parent="."]
-offset_left = 320.0
-offset_top = 64.0
-offset_right = 640.0
-offset_bottom = 128.0
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+scale = Vector2(2, 2)
+transform = Transform2D(2, 0, 0, 2, 0, 0)
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+offset_left = 313.0
+offset_top = 79.5
+offset_right = 633.0
+offset_bottom = 146.5
 theme_override_font_sizes/font_size = 48
 text = "FOOT HERO"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="StartButton" type="Button" parent="."]
-offset_left = 352.0
-offset_top = 192.0
-offset_right = 608.0
-offset_bottom = 256.0
+[node name="StartButton" type="Button" parent="CanvasLayer"]
+offset_left = 345.0
+offset_top = 207.5
+offset_right = 601.0
+offset_bottom = 271.5
 text = "START"
 
-[node name="OptionsButton" type="Button" parent="."]
-offset_left = 352.0
-offset_top = 280.0
-offset_right = 608.0
-offset_bottom = 344.0
+[node name="OptionsButton" type="Button" parent="CanvasLayer"]
+offset_left = 345.0
+offset_top = 295.5
+offset_right = 601.0
+offset_bottom = 359.5
 text = "OPTIONS"
 
-[node name="QuitButton" type="Button" parent="."]
-offset_left = 352.0
-offset_top = 368.0
-offset_right = 608.0
-offset_bottom = 432.0
+[node name="QuitButton" type="Button" parent="CanvasLayer"]
+offset_left = 345.0
+offset_top = 383.5
+offset_right = 601.0
+offset_bottom = 447.5
 text = "QUIT"
