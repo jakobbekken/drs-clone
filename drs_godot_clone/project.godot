@@ -54,5 +54,6 @@ quit={
 
 [rendering]
 
+environment/defaults/default_clear_color=Color(0.23590592, 0.22417876, 0.343013, 1)
 2d/snap/snap_2d_transforms_to_pixel=true
 2d/snap/snap_2d_vertices_to_pixel=true

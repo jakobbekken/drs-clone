@@ -1,9 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://d14hoppf8beb5"]
+[gd_scene load_steps=5 format=3 uid="uid://d14hoppf8beb5"]
 
 [ext_resource type="Texture2D" uid="uid://bxreoas2lbv47" path="res://sprites/Stage-Sheet.png" id="1_kewym"]
 [ext_resource type="Script" uid="uid://cfx2vw18e7fg7" path="res://scenes/Stage.cs" id="2_6c5u0"]
 [ext_resource type="PackedScene" uid="uid://kyi1opcu126w" path="res://scenes/foot.tscn" id="3_vcsse"]
-[ext_resource type="Texture2D" uid="uid://d2yg0jf30i7dd" path="res://sprites/foot-export.png" id="4_6c5u0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2so7o"]
 size = Vector2(474.75, 42)
@@ -18,13 +17,13 @@ foot0 = NodePath("Foot0")
 foot1 = NodePath("Foot1")
 hitbox = NodePath("Area2D")
 
-[node name="Foot0" parent="." instance=ExtResource("3_vcsse")]
-position = Vector2(-40, 0)
-texture = ExtResource("4_6c5u0")
-
 [node name="Foot1" parent="." instance=ExtResource("3_vcsse")]
-position = Vector2(40, 0)
-texture = ExtResource("4_6c5u0")
+position = Vector2(46.5, 1)
+scale = Vector2(0.5, 1)
+
+[node name="Foot0" parent="." instance=ExtResource("3_vcsse")]
+position = Vector2(-47.5, 0)
+scale = Vector2(0.5, 1)
 
 [node name="Area2D" type="Area2D" parent="."]
 

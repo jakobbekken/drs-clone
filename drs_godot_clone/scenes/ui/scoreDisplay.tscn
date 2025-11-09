@@ -5,10 +5,8 @@
 [node name="Scoring" type="Control" node_paths=PackedStringArray("score", "highScore")]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 1070.0
-offset_top = -395.0
-offset_right = 1244.0
-offset_bottom = -333.0
+offset_right = 174.0
+offset_bottom = 62.0
 script = ExtResource("1_pv62o")
 score = NodePath("Score")
 highScore = NodePath("HighScore")

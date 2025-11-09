@@ -46,11 +46,6 @@ namespace Game.Stage
             if (area is VisualNote note) notes.Add(note);
         }
 
-        private void RemoveActiveNote(Node2D body)
-        {
-            if (body is VisualNote note) notes.Remove(note);
-        }
-
         public void MoveFeet(float leftX, float rightX, string leftState, string rightState)
         {
             foot0.Position = new Vector2(Mathf.Clamp((-leftX + 0.5f) * 2f * halfSize, -halfSize, halfSize), foot0.Position.Y);
@@ -67,11 +62,6 @@ namespace Game.Stage
         {
             foreach (VisualNote note in notes)
             {
-                if (note == null)
-                {
-                    notes.Remove(note);
-                    continue;
-                }
                 float yDistance = note.GlobalPosition.Y - hitbox.GlobalPosition.Y;
                 if (yDistance > 0) note.Freeze(controllerDelay);
             }

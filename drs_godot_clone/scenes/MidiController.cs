@@ -115,13 +115,12 @@ public partial class MidiController : Node
             if (elapsed >= noteTimeSec)
             {
                 GetDynamicBPM(next);
-                if(_nextNoteIndex % 1==0 && _canSpawnNote && next.Channel == _leadChannel)
+                if (_nextNoteIndex++ % (4 - Settings.Difficulty) == 0 && _canSpawnNote && next.Channel == _leadChannel)
                 {
                     TriggerNoteVisual(next);
                     //_canSpawnNote = false; // Enable this to prevent notes from spawning too close
                     //noteTimer.Start();
                 }
-                _nextNoteIndex++;
             }
             else break;
         }
@@ -130,7 +129,7 @@ public partial class MidiController : Node
     {
         var instance = NoteScene.Instantiate<VisualNote>();
         AddChild(instance);
-        
+
         float columnWidth = _stageSize / 4f;
         float stageCenterX = _stage.GlobalPosition.X;
         float x = stageCenterX - _stageSize / 2f + columnWidth * (nextNote.NoteNumber % 4 + 0.5f);

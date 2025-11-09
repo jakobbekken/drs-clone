@@ -5,9 +5,11 @@
 [node name="MainMenu" type="Node2D" node_paths=PackedStringArray("startButton", "optionsButton", "quitButton")]
 script = ExtResource("1_7w7rl")
 startPath = "uid://b6vb5qk1ql5t7"
+optionsEditPath = "uid://dtf5uc2deyf3y"
 startButton = NodePath("CanvasLayer/StartButton")
 optionsButton = NodePath("CanvasLayer/OptionsButton")
 quitButton = NodePath("CanvasLayer/QuitButton")
+optionsElementFile = "uid://baeg4lnpw5ak7"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 scale = Vector2(2, 2)

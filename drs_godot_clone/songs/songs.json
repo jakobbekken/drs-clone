@@ -7,7 +7,6 @@
         ".ogg": "res://songs/mii_channel/mii_channel.ogg",
         ".mid": "res://songs/mii_channel/mii_channel.mid",
         "channel": "0"
-        
     },
     "bohemian_rhapsody": {
         "name": "Bohemian Rhapsody",
@@ -19,8 +18,8 @@
         "channel": "3"
     },
     "africa": {
-        "name": "Africa",
-        "artist": "Toto",
+        "name": "(not) Africa",
+        "artist": "(not) Toto",
         "difficulty": "hard",
         "image": "res://sprites/foot-export.png",
         ".ogg": "res://songs/africa/toto-africa.ogg",

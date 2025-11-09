@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bun3cpxq36s7h"]
-
-[ext_resource type="Script" uid="uid://d3blqkg6q1cxq" path="res://scenes/NoteGenerator.cs" id="1_3pcrj"]
-
-[node name="NoteGenertor" type="Node2D"]
-script = ExtResource("1_3pcrj")

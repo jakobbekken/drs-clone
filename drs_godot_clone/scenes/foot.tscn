@@ -1,9 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://kyi1opcu126w"]
 
-[ext_resource type="Texture2D" uid="uid://dadx4ifgo4yr" path="res://sprites/foot.png" id="1_j4st1"]
+[ext_resource type="Texture2D" uid="uid://dbcyfct6yr5je" path="res://sprites/feet3.png" id="1_oiomi"]
 [ext_resource type="Script" uid="uid://bqmc6i2sdejpd" path="res://scenes/Foot.cs" id="2_oiomi"]
 
 [node name="Foot0" type="Sprite2D"]
-texture = ExtResource("1_j4st1")
+texture_filter = 1
+texture = ExtResource("1_oiomi")
 vframes = 3
 script = ExtResource("2_oiomi")
