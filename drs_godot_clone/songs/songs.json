@@ -43,5 +43,14 @@
         ".ogg": "res://songs/boogie_wonderland/Boogie-Wonderland.ogg",
         ".mid": "res://songs/boogie_wonderland/Boogie-Wonderland.mid",
         "channel": "8"
+    },
+    "random_notes": {
+        "name": "random_notes",
+        "artist": "None",
+        "difficulty": "easy",
+        "image": "res://sprites/foot-export.png",
+        ".ogg": "res://songs/random_notes/random_quarter_notes.ogg",
+        ".mid": "res://songs/random_notes/random_quarter_notes.mid",
+        "channel": "0"
     }
 }

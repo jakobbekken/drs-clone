@@ -16,6 +16,7 @@ controller = NodePath("MidiController")
 [node name="Stage" parent="." node_paths=PackedStringArray("_socket") instance=ExtResource("1_berbj")]
 position = Vector2(481, 512)
 noteHitTextPath = "uid://dq7lsqnc3kdqj"
+footXTolerance = 140.0
 _socket = NodePath("../WebSocket")
 
 [node name="Camera2D" type="Camera2D" parent="Stage"]

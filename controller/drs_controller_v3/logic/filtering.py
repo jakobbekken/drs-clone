@@ -19,9 +19,9 @@ def filter_1_euro(
     last_state,
     x, y, speed_y,
     freq=60.0,
-    min_cutoff=1.5,
-    beta=0.02,
-    d_cutoff=1.0
+    min_cutoff=4,
+    beta=14,
+    d_cutoff=7
 ):
     if not last_state or last_state.last_raw_y is None:
         if last_state:
@@ -45,4 +45,4 @@ def filter_1_euro(
     x_hat = alpha_pos * x + (1 - alpha_pos) * last_state.x
     y_hat = alpha_pos * y + (1 - alpha_pos) * last_state.y
 
-    return x_hat, y_hat, dy_hat
+    return x, y_hat, dy_hat

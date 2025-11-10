@@ -23,6 +23,6 @@ public partial class ScoreDisplay : Control
     }
     private void GetHighScore()
     {
-        highScore.Text = "9001";
+        highScore.Text = "100";
     }
 }

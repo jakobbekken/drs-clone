@@ -22,7 +22,7 @@ public partial class MidiController : Node
     // Notes
     public float _noteSpawnHeight = 0; // 0 is at y = 0
     public double _noteSpeed;
-    public double _addBpmChange = 400;
+    public double _addBpmChange = 200;
     private List<Note> _notes;
     private List<Note> trueNotes = new();
     private List<VisualNote> _activeNotes = new();
@@ -30,6 +30,7 @@ public partial class MidiController : Node
 
 
     //Midi file and song
+    [Export] public double ManualAudioOffset = 0.005;
     string godotPath = "";
     private MidiFile _midiFile;
     private TempoMap _tempoMap;
@@ -56,6 +57,7 @@ public partial class MidiController : Node
 
         _tempoMap = _midiFile.GetTempoMap();
         _notes = _midiFile.GetNotes().OrderBy(n => n.Time).ToList();
+
         _noteSpeed = (_BPM + _addBpmChange) * (Settings.NoteSpeed / 100);
         _noteSpawnHeight = (_stagePosY - 1200) * (Settings.NoteSpeed / 100);
 
@@ -81,7 +83,7 @@ public partial class MidiController : Node
         double firstNoteTimeSec = TimeConverter
             .ConvertTo<MetricTimeSpan>(trueNotes[0].Time, _tempoMap)
             .TotalMicroseconds / 1_000_000.0;
-        double audioDelay = Math.Max(0, firstNoteTimeSec - travelTime);
+        double audioDelay = Math.Max(0, firstNoteTimeSec - travelTime + ManualAudioOffset);
 
         GD.Print(GetStaticBPM());
 
@@ -120,6 +122,7 @@ public partial class MidiController : Node
                     TriggerNoteVisual(next);
                     //_canSpawnNote = false; // Enable this to prevent notes from spawning too close
                     //noteTimer.Start();
+                    //_nextNoteIndex++;
                 }
             }
             else break;

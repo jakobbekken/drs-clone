@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://bqmc6i2sdejpd" path="res://scenes/Foot.cs" id="2_oiomi"]
 
 [node name="Foot0" type="Sprite2D"]
+z_index = -1
 texture_filter = 1
 texture = ExtResource("1_oiomi")
 vframes = 3
