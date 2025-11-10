@@ -8,6 +8,7 @@
 size = Vector2(474.75, 42)
 
 [node name="Stage" type="Sprite2D" node_paths=PackedStringArray("foot0", "foot1", "hitbox")]
+z_index = -3
 scale = Vector2(2, 1)
 texture = ExtResource("1_kewym")
 vframes = 2
@@ -18,10 +19,12 @@ foot1 = NodePath("Foot1")
 hitbox = NodePath("Area2D")
 
 [node name="Foot1" parent="." instance=ExtResource("3_vcsse")]
+z_as_relative = false
 position = Vector2(46.5, 1)
 scale = Vector2(0.5, 1)
 
 [node name="Foot0" parent="." instance=ExtResource("3_vcsse")]
+z_as_relative = false
 position = Vector2(-47.5, 0)
 scale = Vector2(0.5, 1)
 

@@ -4,10 +4,6 @@ class FootState:
         self.x = 0
         self.y = 0
         self.speed_y = 0
-        self.dy_hat = 0
-        self.last_raw_x = None
-        self.last_raw_y = None
-        self.dt = 1/30
         self.threshold = threshold
 
     def update(self, x, y, speed_y, time):

@@ -17,11 +17,12 @@ namespace Game.Stage
         [Export] Foot foot1;
         [Export] Area2D hitbox;
         [Export] WebSocket _socket;
-        [Export] float maxStageRange = 0.6f;
-        [Export] float minStageRange = 0.2f;
+        [Export] float maxStageRange = 0.7f;
+        [Export] float minStageRange = 0.4f;
         public float halfSize = 1.0f;
         public float unit = 1.0f;
         public int score { get; private set; } = 0;
+        public float _hitOffsetTolerance = 0.1f; // 100 ms of leniency
 
         float sceneWidth;
 
@@ -36,8 +37,8 @@ namespace Game.Stage
             hitbox.AreaExited += RemoveActiveNote;
             _socket.DataReceived += MoveFeet;
             sceneWidth = Texture.GetWidth() / 2f * Scale.X;
-            minStageRange = (100 - Settings.ActiveSceneArea) / 2;
-            maxStageRange = 100 - minStageRange;
+            minStageRange = ((100 - Settings.ActiveSceneArea) / 2)/100;
+            maxStageRange = 1 - minStageRange;
         }
 
         private void RemoveActiveNote(Area2D area)
@@ -52,7 +53,10 @@ namespace Game.Stage
 
         private float Normalize(float input, float max, float min)
         {
-            return Mathf.Clamp((input - min) / (max - min), 0f, 1f); // Return a value between 0, and 1 
+            // Ignore anything outside the active center region
+            float norm = (input - min) / (max - min);
+            norm = Mathf.Clamp(norm, 0f, 1f);
+            return norm;
         }
 
         public void MoveFeet(float leftX, float rightX, string leftState, string rightState)
@@ -97,19 +101,18 @@ namespace Game.Stage
                 {
 
                     float yDistance = Mathf.Abs(note.GlobalPosition.Y - hitbox.GlobalPosition.Y);
-                    int timing = TimingRating(yDistance);
-                    if (timing > 0)
+                    float allowedDistance = (float)(note.speed * _hitOffsetTolerance);
+                    if (yDistance <= allowedDistance)
                     {
+                        int timing = TimingRating(yDistance);
                         GivePoints(timing);
                         NoteVFX(foot, timing);
                         notes.Remove(note);
                         note.QueueFree();
                         break;
                     }
-
                 }
             }
-
         }
         #region NoteHit
         private void NoteVFX(Foot foot, int timing)
@@ -143,11 +146,11 @@ namespace Game.Stage
         {
             switch (yDistance)
             {
-                case var _ when yDistance < 10f: //perfect
+                case var _ when yDistance < 25f: //perfect
                     return 3;
-                case var _ when yDistance < 25f: //good
+                case var _ when yDistance < 35f: //good
                     return 2;
-                case var _ when yDistance < 45f: //ok
+                case var _ when yDistance < 65f: //ok
                     return 1;
                 default:                         //miss
                     return 0;
