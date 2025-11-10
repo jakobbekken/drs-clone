@@ -9,6 +9,7 @@ class FootSniffer:
     def __init__(self, cap_source: Optional[int|str] = None, hook: Optional[Callable] = None) -> None:
         self.cap_source = cap_source
         self.cap = cv2.VideoCapture(cap_source) if cap_source is not None else None
+        self.start_time: Optional[float] = None
         self.hook = hook
 
         if self.cap is not None:
@@ -21,8 +22,7 @@ class FootSniffer:
             self.cap_dt = 1 / self.cap_fps
             self.cap_width = int(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH))
             self.cap_height = int(self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-        self.start_time: Optional[float] = None
-
+        
         # preprocessing
         self.resize_width: Optional[int] = None
         self.blur_sigma: float = 1.0
