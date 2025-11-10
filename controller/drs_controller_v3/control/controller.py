@@ -4,7 +4,7 @@ from drs_controller_v3.logic.processor import CamProcessor
 
 
 class Controller:
-    def __init__(self, threshold=0.1, host="0.0.0.0", port=6969):
+    def __init__(self, threshold=0.025, host="0.0.0.0", port=6969):
         self.processor = CamProcessor(threshold)
         self.server = Server(host, port)
         self.running = True
