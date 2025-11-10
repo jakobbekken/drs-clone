@@ -1,5 +1,6 @@
 import math
 
+
 def filter_exp(last_state, x, y, speed_y, alpha=0.8):
     if not last_state:
         return x, y, speed_y
@@ -10,19 +11,13 @@ def filter_exp(last_state, x, y, speed_y, alpha=0.8):
 
     return new_x, new_y, new_speed_y
 
+
 def alpha(dt, cutoff):
     tau = 1.0 / (2.0 * math.pi * cutoff)
     return 1.0 / (1.0 + tau / dt)
 
 
-def filter_1_euro(
-    last_state,
-    x, y, speed_y,
-    freq=60.0,
-    min_cutoff=4,
-    beta=14,
-    d_cutoff=7
-):
+def filter_1_euro(last_state, x, y, speed_y, min_cutoff=4, beta=14, d_cutoff=7):
     if not last_state or last_state.last_raw_y is None:
         if last_state:
             last_state.last_raw_x = x
@@ -42,7 +37,6 @@ def filter_1_euro(
 
     alpha_pos = alpha(dt, cutoff)
 
-    x_hat = alpha_pos * x + (1 - alpha_pos) * last_state.x
     y_hat = alpha_pos * y + (1 - alpha_pos) * last_state.y
 
-    return x, y_hat, (last_state.y - y)/dt
+    return x, y_hat, (last_state.y - y) / dt
