@@ -3,4 +3,4 @@
 /android/
 .vs/
 Diagrams/*.png
-./highScore.json
+/highScore.json
