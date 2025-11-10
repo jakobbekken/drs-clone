@@ -21,7 +21,7 @@ class FootSniffer:
             self.cap_dt = 1 / self.cap_fps
             self.cap_width = int(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH))
             self.cap_height = int(self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-            self.start_time: Optional[float] = None
+        self.start_time: Optional[float] = None
 
         # preprocessing
         self.resize_width: Optional[int] = None
