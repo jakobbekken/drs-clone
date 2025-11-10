@@ -51,22 +51,14 @@ class CamProcessor:
             self.prev_left,
             left["x"],
             left["y"],
-            left["speed_y"],
-            freq=self.camera.fps,
-            min_cutoff=1.5,
-            beta=0.02,
-            d_cutoff=1.0,
+            left["speed_y"]
         )
 
         new_right = filter_1_euro(
             self.prev_right,
             right["x"],
             right["y"],
-            right["speed_y"],
-            freq=self.camera.fps,
-            min_cutoff=1.5,
-            beta=0.02,
-            d_cutoff=1.0,
+            right["speed_y"]
         )
 
         self.foot_left.update(*new_left, t)
