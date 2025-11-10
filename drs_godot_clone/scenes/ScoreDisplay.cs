@@ -30,7 +30,9 @@ public partial class ScoreDisplay : Control
     }
     private void GetHighScore()
     {
-        highScoreText.Text = highscores[Settings.activeSong].ToString();
+        int highScore = highscores.TryGetValue(Settings.activeSong, out int e) ? highscores[Settings.activeSong] : 1;
+        highScoreText.Text = highScore.ToString();
+        highscores[Settings.activeSong] = highScore;
     }
     public override void _ExitTree()
     {

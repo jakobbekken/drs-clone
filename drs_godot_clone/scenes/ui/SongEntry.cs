@@ -16,6 +16,7 @@ public partial class SongEntry : Control
 
     static SongEntry selectedSong;
 
+    string key;
     string songMid;
     string songOgg;
     int channel;
@@ -38,15 +39,15 @@ public partial class SongEntry : Control
         }
     }
 
-    public void OnStartButtonPressed(Action<string, string, int> action)
+    public void OnStartButtonPressed(Action<string> action)
     {
-        startButton.Pressed += () => { action.Invoke(songMid, songOgg, channel); };
+        startButton.Pressed += () => { action.Invoke(key); };
     }
 
 
-    public void SetSongVariables(Dictionary<string, string> song_entry)
+    public void SetSongVariables(string key, Dictionary<string, string> song_entry)
     {
-        GD.Print(song_entry);
+        this.key = key;
         name.Text = song_entry["name"];
         artist.Text = song_entry["artist"];
         difficulty.Text = song_entry["difficulty"];

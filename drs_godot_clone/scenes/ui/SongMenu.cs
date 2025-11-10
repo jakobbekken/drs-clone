@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Godot;
 using Godot.Collections;
 
@@ -14,26 +15,29 @@ public partial class SongMenu : Node2D
     public override void _Ready()
     {
         LoadJsonFile();
-        foreach (var song in songs.Values)
+        foreach (var (key, song) in songs)
         {
-            AddSongElement(song);
+            AddSongElement(key, song);
         }
     }
 
-    private void AddSongElement(Dictionary<string, string> song)
+    private void AddSongElement(string key, Dictionary<string, string> song)
     {
         var entry = GD.Load<PackedScene>(songEntryFile).Instantiate<SongEntry>();
-        entry.SetSongVariables(song);
+        entry.SetSongVariables(key, song);
         entry.OnStartButtonPressed(SwitchSceneToSong);
         songList.AddChild(entry);
     }
 
-    void SwitchSceneToSong(string midiFile, string oggFile, int channel)
+    void SwitchSceneToSong(string key)
     {
-        PackedScene scene = GD.Load<PackedScene>(gameScene);
-        var thing = scene.Instantiate<GameHead>();
-        thing.SetSong(oggFile, midiFile, channel);
-        AddSibling(thing);
+        Settings.activeSong = key;
+        var song = songs[key];
+        GD.Print(song);
+        PackedScene scene = GD.Load<PackedScene>(this.gameScene);
+        var gameScene = scene.Instantiate<GameHead>();
+        gameScene.SetSong(song[".ogg"], song[".mid"], song["channel"].ToInt());
+        AddSibling(gameScene);
         QueueFree();
     }
 

@@ -13,8 +13,8 @@ public partial class Settings : Node
 
     static Settings instance;
     float activeSceneArea = 60;
-    float noteSpeed = 100;
-    int difficulty = 1;
+    float noteSpeed = 200;
+    int difficulty = 3;
     Dictionary<string, int> highScores;
     string highScorePath = "res://highScore.json";
     public override void _Ready()
@@ -22,8 +22,8 @@ public partial class Settings : Node
         if (instance == null)
         {
             instance = this;
-            var file = FileAccess.Open(ProjectSettings.GlobalizePath(instance.highScorePath), FileAccess.ModeFlags.Read);
-            highScores = Json.ParseString(file.GetAsText()).AsGodotDictionary<string, int>();
+            var file = FileAccess.Open(ProjectSettings.GlobalizePath(highScorePath), FileAccess.ModeFlags.Read);
+            highScores = file != null ? Json.ParseString(file.GetAsText()).AsGodotDictionary<string, int>() : new();
         }
         else
         {
