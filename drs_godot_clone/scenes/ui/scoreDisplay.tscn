@@ -2,14 +2,14 @@
 
 [ext_resource type="Script" uid="uid://bcf05kobdo43t" path="res://scenes/ScoreDisplay.cs" id="1_pv62o"]
 
-[node name="Scoring" type="Control" node_paths=PackedStringArray("score", "highScore")]
+[node name="Scoring" type="Control" node_paths=PackedStringArray("scoreText", "highScoreText")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 174.0
 offset_bottom = 62.0
 script = ExtResource("1_pv62o")
-score = NodePath("Score")
-highScore = NodePath("HighScore")
+scoreText = NodePath("Score")
+highScoreText = NodePath("HighScore")
 
 [node name="SText" type="Label" parent="."]
 layout_mode = 0
