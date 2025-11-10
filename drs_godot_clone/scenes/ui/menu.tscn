@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://diqwfirpjayem"]
+[gd_scene load_steps=3 format=3 uid="uid://diqwfirpjayem"]
 
 [ext_resource type="Script" uid="uid://bld4qp6gsun4g" path="res://scenes/ui/MainMenu.cs" id="1_7w7rl"]
+[ext_resource type="Texture2D" uid="uid://pdgb3q48ivo3" path="res://sprites/TitleImage.png" id="2_wedc3"]
 
 [node name="MainMenu" type="Node2D" node_paths=PackedStringArray("startButton", "optionsButton", "quitButton")]
 script = ExtResource("1_7w7rl")
@@ -15,33 +16,28 @@ optionsElementFile = "uid://baeg4lnpw5ak7"
 scale = Vector2(2, 2)
 transform = Transform2D(2, 0, 0, 2, 0, 0)
 
-[node name="Label" type="Label" parent="CanvasLayer"]
-offset_left = 313.0
-offset_top = 79.5
-offset_right = 633.0
-offset_bottom = 146.5
-theme_override_font_sizes/font_size = 48
-text = "FOOT HERO"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="StartButton" type="Button" parent="CanvasLayer"]
-offset_left = 345.0
-offset_top = 207.5
-offset_right = 601.0
-offset_bottom = 271.5
+offset_left = 344.0
+offset_top = 328.0
+offset_right = 600.0
+offset_bottom = 376.0
 text = "START"
 
 [node name="OptionsButton" type="Button" parent="CanvasLayer"]
-offset_left = 345.0
-offset_top = 295.5
-offset_right = 601.0
-offset_bottom = 359.5
+offset_left = 344.0
+offset_top = 388.0
+offset_right = 600.0
+offset_bottom = 436.0
 text = "OPTIONS"
 
 [node name="QuitButton" type="Button" parent="CanvasLayer"]
-offset_left = 345.0
-offset_top = 383.5
-offset_right = 601.0
-offset_bottom = 447.5
+offset_left = 343.5
+offset_top = 448.0
+offset_right = 599.5
+offset_bottom = 496.0
 text = "QUIT"
+
+[node name="TitleImage" type="Sprite2D" parent="."]
+position = Vector2(945.00006, 301)
+scale = Vector2(2.2066667, 2.2066665)
+texture = ExtResource("2_wedc3")
