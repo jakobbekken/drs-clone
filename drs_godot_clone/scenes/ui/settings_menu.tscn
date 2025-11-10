@@ -68,7 +68,7 @@ offset_top = 9.0
 offset_right = 628.0
 offset_bottom = 25.0
 min_value = 80.0
-max_value = 300.0
+max_value = 500.0
 step = 5.0
 value = 100.0
 
