@@ -45,4 +45,4 @@ def filter_1_euro(
     x_hat = alpha_pos * x + (1 - alpha_pos) * last_state.x
     y_hat = alpha_pos * y + (1 - alpha_pos) * last_state.y
 
-    return x, y_hat, dy_hat
+    return x, y_hat, (last_state.y - y)/dt
